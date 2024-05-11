@@ -1,17 +1,9 @@
 package rentaltech.electronics.repository;
 
-import jakarta.persistence.EntityManager;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.jpa.repository.JpaRepository;
 import rentaltech.electronics.entity.Member;
 
-@Repository
-@RequiredArgsConstructor
-public class MemberRepository {
+public interface MemberRepository extends JpaRepository<Member,String> {
 
-    private final EntityManager em;
-
-    public void save(Member member) {   // 회원가입
-        em.persist(member);
-    }
+    Member findByMail(String email);
 }

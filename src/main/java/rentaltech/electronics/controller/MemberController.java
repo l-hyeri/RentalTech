@@ -25,20 +25,25 @@ public class MemberController {
     }
 
     @PostMapping("/members/join")
-    public String join(@Valid joinFormDto form, BindingResult result) {
+    public String join(@Valid joinFormDto form, BindingResult result, Model model) {
         if (result.hasErrors()) {
             return "members/joinForm";
         }
 
-        Member member = new Member();
-        member.setId(form.getMember_id());
-        member.setPw(form.getPw());
-        member.setName(form.getName());
-        member.setPhone(form.getPhone());
-        member.setAddress(form.getAddress());
-        member.setMail(form.getMail());
+        try {
+            Member member = new Member();
+            member.setMember_id(form.getMember_id());
+            member.setPw(form.getPw());
+            member.setName(form.getName());
+            member.setPhone(form.getPhone());
+            member.setAddress(form.getAddress());
+            member.setMail(form.getMail());
 
-        memberService.join(member);
+            memberService.join(member);
+        } catch (Exception e) {
+            model.addAttribute("errorMessage", e.getMessage());
+            return "members/joinForm";
+        }
 
         return "redirect:/";
     }

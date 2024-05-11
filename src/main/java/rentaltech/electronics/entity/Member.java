@@ -13,11 +13,11 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-public class Member {
+public class Member{
 
     @Id
     @Column(name = "member_id")
-    private String id;    // 아이디
+    private String member_id;   // 아이디
 
     private String pw;    // 비밀번호
 
