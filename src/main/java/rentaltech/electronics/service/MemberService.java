@@ -3,7 +3,7 @@ package rentaltech.electronics.service;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import rentaltech.electronics.domain.Member;
+import rentaltech.electronics.entity.Member;
 import rentaltech.electronics.repository.MemberRepository;
 
 @Service

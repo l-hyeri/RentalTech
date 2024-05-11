@@ -3,7 +3,7 @@ package rentaltech.electronics.repository;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
-import rentaltech.electronics.domain.Member;
+import rentaltech.electronics.entity.Member;
 
 @Repository
 @RequiredArgsConstructor
