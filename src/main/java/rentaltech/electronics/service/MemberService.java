@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 import rentaltech.electronics.entity.Member;
 import rentaltech.electronics.repository.MemberRepository;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class MemberService {
@@ -18,9 +20,9 @@ public class MemberService {
 
     // 중복회원 확인
     public void validateDuplicateMember(Member member) {
-        Member findMember = memberRepository.findByMail(member.getMail());
+        Optional<Member> findMember = memberRepository.findByMail(member.getMail());
 
-        if (findMember != null) {
+        if (findMember.isPresent()) {
             throw new IllegalStateException("이미 가입된 회원입니다.");
         }
     }
