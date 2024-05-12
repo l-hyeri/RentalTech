@@ -30,6 +30,11 @@ public class MemberController {
             return "members/joinForm";
         }
 
+        if (!form.isPWEqual()) {
+            System.out.println("비밀번호 불일치");
+            return "members/joinForm";
+        }
+
         try {
             Member member = new Member();
             member.setMember_id(form.getMember_id());
@@ -40,6 +45,7 @@ public class MemberController {
             member.setMail(form.getMail());
 
             memberService.join(member);
+
         } catch (Exception e) {
             model.addAttribute("errorMessage", e.getMessage());
             return "members/joinForm";

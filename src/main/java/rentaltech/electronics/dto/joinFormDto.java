@@ -30,4 +30,9 @@ public class joinFormDto {
 
     private String mail;
 
+    // 비밀번호 일치 확인
+    public boolean isPWEqual() {
+        return pw != null && pw.equals(check_pw);
+    }
+
 }
