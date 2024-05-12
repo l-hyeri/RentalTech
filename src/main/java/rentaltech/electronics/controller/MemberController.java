@@ -7,8 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import rentaltech.electronics.dto.joinFormDto;
-import rentaltech.electronics.entity.Member;
+import rentaltech.electronics.dto.memberDto;
 import rentaltech.electronics.service.MemberService;
 
 @Controller
@@ -19,13 +18,13 @@ public class MemberController {
 
 
     @GetMapping("/members/join")
-    public String joinForm(joinFormDto joinForm, Model model) {
+    public String joinForm(memberDto joinForm, Model model) {
         model.addAttribute("joinForm", joinForm);
         return "members/joinForm";
     }
 
     @PostMapping("/members/join")
-    public String join(@Valid joinFormDto form, BindingResult result, Model model) {
+    public String join(@Valid memberDto form, BindingResult result, Model model) {
         if (result.hasErrors()) {
             return "members/joinForm";
         }
@@ -36,14 +35,7 @@ public class MemberController {
         }
 
         try {
-            Member member = new Member();
-            member.setPw(form.getPw());
-            member.setName(form.getName());
-            member.setPhone(form.getPhone());
-            member.setAddress(form.getAddress());
-            member.setMail(form.getMail());
-
-            memberService.join(member);
+            memberService.join(form);
 
         } catch (Exception e) {
             model.addAttribute("errorMessage", e.getMessage());

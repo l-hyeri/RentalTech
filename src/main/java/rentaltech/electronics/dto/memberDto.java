@@ -6,7 +6,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class joinFormDto {
+public class memberDto {
 
     @NotNull(message = "이메일 입력은 필수입니다.")
     private String mail;
