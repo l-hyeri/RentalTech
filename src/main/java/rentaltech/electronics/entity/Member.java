@@ -1,8 +1,6 @@
 package rentaltech.electronics.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,7 +15,8 @@ public class Member{
 
     @Id
     @Column(name = "member_id")
-    private String member_id;   // 아이디
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long member_id;   // 아이디
 
     private String pw;    // 비밀번호
 

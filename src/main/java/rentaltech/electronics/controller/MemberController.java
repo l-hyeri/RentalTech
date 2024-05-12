@@ -37,7 +37,6 @@ public class MemberController {
 
         try {
             Member member = new Member();
-            member.setMember_id(form.getMember_id());
             member.setPw(form.getPw());
             member.setName(form.getName());
             member.setPhone(form.getPhone());

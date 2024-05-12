@@ -1,7 +1,6 @@
 package rentaltech.electronics.dto;
 
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Null;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,9 +8,8 @@ import lombok.Setter;
 @Setter
 public class joinFormDto {
 
-
-    @NotNull(message = "아이디 입력은 필수입니다.")
-    private String member_id;
+    @NotNull(message = "이메일 입력은 필수입니다.")
+    private String mail;
 
     @NotNull(message = "비밀번호 입력은 필수입니다.")
     private String pw;
@@ -27,8 +25,6 @@ public class joinFormDto {
 
     @NotNull(message = "주소 입력은 필수입니다.")
     private String address;
-
-    private String mail;
 
     // 비밀번호 일치 확인
     public boolean isPWEqual() {
