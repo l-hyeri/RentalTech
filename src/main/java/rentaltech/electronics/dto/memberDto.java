@@ -3,6 +3,7 @@ package rentaltech.electronics.dto;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
+import rentaltech.electronics.entity.Member;
 
 @Getter
 @Setter
@@ -25,6 +26,17 @@ public class memberDto {
 
     @NotNull(message = "주소 입력은 필수입니다.")
     private String address;
+
+    public static memberDto toMemberDto(Member member) {
+        memberDto memberDto = new memberDto();
+        memberDto.setMail(member.getMail());
+        memberDto.setPw(member.getPw());
+        memberDto.setName(member.getName());
+        memberDto.setPhone(member.getPhone());
+        memberDto.setAddress(member.getAddress());
+
+        return memberDto;
+    }
 
     // 비밀번호 일치 확인
     public boolean isPWEqual() {

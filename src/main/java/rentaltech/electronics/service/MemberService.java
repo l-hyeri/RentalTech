@@ -15,19 +15,13 @@ public class MemberService {
     private final MemberRepository memberRepository;
 
     public void join(memberDto memberDto) { // 회원가입
-
-        Member member = new Member();
-        member.setPw(memberDto.getPw());
-        member.setName(memberDto.getName());
-        member.setPhone(memberDto.getPhone());
-        member.setAddress(memberDto.getAddress());
-        member.setMail(memberDto.getMail());
+        Member member = Member.toMember(memberDto);
 
         validateDuplicateMember(member);
         memberRepository.save(member);
     }
 
-    // 중복회원 확인
+    // 중복회원 확인 (회원가입)
     public void validateDuplicateMember(Member member) {
         Optional<Member> findMember = memberRepository.findByMail(member.getMail());
 

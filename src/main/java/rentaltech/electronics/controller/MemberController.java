@@ -18,8 +18,8 @@ public class MemberController {
 
 
     @GetMapping("/members/join")
-    public String joinForm(memberDto joinForm, Model model) {
-        model.addAttribute("joinForm", joinForm);
+    public String joinForm(memberDto memberDto, Model model) {
+        model.addAttribute("joinForm", memberDto);
         return "members/joinForm";
     }
 
@@ -36,12 +36,10 @@ public class MemberController {
 
         try {
             memberService.join(form);
-
         } catch (Exception e) {
             model.addAttribute("errorMessage", e.getMessage());
             return "members/joinForm";
         }
-
         return "redirect:/";
     }
 }

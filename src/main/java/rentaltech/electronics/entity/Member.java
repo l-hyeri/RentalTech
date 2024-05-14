@@ -3,6 +3,7 @@ package rentaltech.electronics.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import rentaltech.electronics.dto.memberDto;
 
 /**
  * 회원 Entity
@@ -11,7 +12,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-public class Member{
+public class Member {
 
     @Id
     @Column(name = "member_id")
@@ -28,4 +29,15 @@ public class Member{
     private String address; // 주소
 
     private String mail;    // 이메일 주소
+
+    public static Member toMember(memberDto memberDto) {
+        Member member = new Member();
+        member.setMail(memberDto.getMail());
+        member.setPw(memberDto.getPw());
+        member.setName(memberDto.getName());
+        member.setPhone(memberDto.getPhone());
+        member.setAddress(memberDto.getAddress());
+
+        return member;
+    }
 }
