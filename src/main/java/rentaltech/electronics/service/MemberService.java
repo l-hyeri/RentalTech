@@ -21,6 +21,23 @@ public class MemberService {
         memberRepository.save(member);
     }
 
+    public memberDto login(memberDto memberDto) {    // 로그인
+
+        Optional<Member> findMember = memberRepository.findByMail(memberDto.getMail());
+
+        if (findMember.isPresent()) {
+            Member member = findMember.get();
+            if (member.getPw().equals(memberDto.getPw())) {
+                memberDto dto = memberDto.toMemberDto(member);
+                return dto;
+            } else {    // 비밀번호 불일치
+                return null;
+            }
+        } else {    // 조회 경로가 없는 경우
+            return null;
+        }
+    }
+
     // 중복회원 확인 (회원가입)
     public void validateDuplicateMember(Member member) {
         Optional<Member> findMember = memberRepository.findByMail(member.getMail());
