@@ -65,6 +65,6 @@ public class MemberController {
             model.addAttribute("errorMessage", e.getMessage());
             return "members/loginForm";
         }
-        return "loginHome";
+        return "adminHome";
     }
 }
