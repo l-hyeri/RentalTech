@@ -5,6 +5,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import rentaltech.electronics.constant.Role;
 import rentaltech.electronics.entity.Member;
 
 /**
@@ -41,6 +42,7 @@ public class InitDB {
             member.setPhone("010-0000-0000");
             member.setAddress("관리자 주소");
             member.setMail("manager@gmail.com");
+            member.setRole(Role.ADMIN);
 
             return member;
         }

@@ -3,6 +3,7 @@ package rentaltech.electronics.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import rentaltech.electronics.constant.Role;
 import rentaltech.electronics.dto.memberDto;
 
 /**
@@ -30,6 +31,9 @@ public class Member {
 
     private String mail;    // 이메일 주소
 
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
     public static Member toMember(memberDto memberDto) {
         Member member = new Member();
         member.setMail(memberDto.getMail());
@@ -37,6 +41,7 @@ public class Member {
         member.setName(memberDto.getName());
         member.setPhone(memberDto.getPhone());
         member.setAddress(memberDto.getAddress());
+        member.setRole(Role.USER);
 
         return member;
     }
