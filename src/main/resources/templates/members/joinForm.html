@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
@@ -53,17 +53,17 @@
     <div class="container px-4 px-lg-5 my-5">
         <div class="text-center text-white">
             <h1 class="display-4 fw-bolder">Shop in style</h1>
-            <p class="lead fw-normal text-white-50 mb-0">With this shop hompeage template</p>
+            <p class="lead fw-normal text-white-50 mb-0">With this shop homepage template</p>
         </div>
     </div>
 </header>
 <!-- Section-->
 <section class="py-5">
-    <form role="form" action="/members/join" th:object="${MemberDto}" method="post">
+    <form action="/members/join" th:object="${memberDto}" method="post">
         <div class="form-group">
             <label th:for="mail">이메일</label>
             <input type="text" th:field="*{mail}" class="form-control"
-                   th:class="${#fields.hasErrors('mail')}? 'form-controlfieldError' : 'form-control'">
+                   th:class="${#fields.hasErrors('mail')}? 'form-control fieldError' : 'form-control'">
             <p th:if="${#fields.hasErrors('mail')}"
                th:errors="*{mail}">Incorrect date</p>
         </div>
@@ -71,7 +71,7 @@
             <label th:for="pw">비밀번호</label>
             <input type="text" th:field="*{pw}" class="form-control"
                    placeholder="비밀번호를 입력하세요"
-                   th:class="${#fields.hasErrors('pw')}? 'form-controlfieldError' : 'form-control'">
+                   th:class="${#fields.hasErrors('pw')}? 'form-control fieldError' : 'form-control'">
             <p th:if="${#fields.hasErrors('pw')}"
                th:errors="*{pw}">Incorrect date</p>
         </div>
@@ -79,7 +79,7 @@
             <label th:for="check_pw">비밀번호 확인</label>
             <input type="text" th:field="*{check_pw}" class="form-control"
                    placeholder="비밀번호 확인을 입력하세요"
-                   th:class="${#fields.hasErrors('check_pw')}? 'form-controlfieldError' : 'form-control'">
+                   th:class="${#fields.hasErrors('check_pw')}? 'form-control fieldError' : 'form-control'">
             <p th:if="${#fields.hasErrors('check_pw')}"
                th:errors="*{check_pw}">Incorrect date</p>
         </div>
@@ -87,7 +87,7 @@
             <label th:for="name">이름</label>
             <input type="text" th:field="*{name}" class="form-control"
                    placeholder="이름을 입력하세요"
-                   th:class="${#fields.hasErrors('name')}? 'form-controlfieldError' : 'form-control'">
+                   th:class="${#fields.hasErrors('name')}? 'form-control fieldError' : 'form-control'">
             <p th:if="${#fields.hasErrors('name')}"
                th:errors="*{name}">Incorrect date</p>
         </div>
