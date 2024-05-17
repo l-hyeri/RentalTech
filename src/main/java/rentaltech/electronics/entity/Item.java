@@ -16,7 +16,7 @@ import rentaltech.electronics.exception.OutOfStockException;
 public class Item { // 카테고리(categories-List)
 
     @Id
-    private Long serial_num;
+    private Long serialNum;
 
     private String item_name;
 
@@ -33,7 +33,7 @@ public class Item { // 카테고리(categories-List)
 
     public static Item toItem(ItemDto itemDto) {
         Item item = new Item();
-        item.setSerial_num(itemDto.getSerial_num());
+        item.setSerialNum(itemDto.getSerialNum());
         item.setItem_name(itemDto.getItem_name());
         item.setPrice(itemDto.getPrice());
         item.setStockStatus(ItemStockStatus.SELL);

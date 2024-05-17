@@ -60,7 +60,7 @@
 <!-- Section-->
 <section class="py-5">
     <form action="/items/register" role="form" th:object="${itemDto}" method="post">
-        시리얼 번호 : <input type="text" th:field="*{serial_num}" class="form-control"> <br>
+        시리얼 번호 : <input type="text" th:field="*{serialNum}" class="form-control"> <br>
         상품명 : <input type="text" th:field="*{item_name}" class="form-control"> <br>
         가격 : <input type="number" th:field="*{price}" class="form-control"> <br>
         재고 개수 : <input type="text" th:field="*{stock}" class="form-control"> <br>
