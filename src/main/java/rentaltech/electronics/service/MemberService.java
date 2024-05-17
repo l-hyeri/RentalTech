@@ -2,7 +2,7 @@ package rentaltech.electronics.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import rentaltech.electronics.dto.memberDto;
+import rentaltech.electronics.dto.MemberDto;
 import rentaltech.electronics.entity.Member;
 import rentaltech.electronics.repository.MemberRepository;
 
@@ -14,21 +14,21 @@ public class MemberService {
 
     private final MemberRepository memberRepository;
 
-    public void join(memberDto memberDto) { // 회원가입
+    public void join(MemberDto memberDto) { // 회원가입
         Member member = Member.toMember(memberDto);
 
         validateDuplicateMember(member);
         memberRepository.save(member);
     }
 
-    public memberDto login(memberDto memberDto) {    // 로그인
+    public MemberDto login(MemberDto memberDto) {    // 로그인
 
         Optional<Member> findMember = memberRepository.findByMail(memberDto.getMail());
 
         if (findMember.isPresent()) {
             Member member = findMember.get();
             if (member.getPw().equals(memberDto.getPw())) {
-                memberDto dto = memberDto.toMemberDto(member);
+                MemberDto dto = memberDto.toMemberDto(member);
                 return dto;
             } else {    // 비밀번호 불일치
                 return null;

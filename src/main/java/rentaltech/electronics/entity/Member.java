@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import rentaltech.electronics.constant.Role;
-import rentaltech.electronics.dto.memberDto;
+import rentaltech.electronics.dto.MemberDto;
 
 /**
  * 회원 Entity
@@ -34,7 +34,7 @@ public class Member {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    public static Member toMember(memberDto memberDto) {
+    public static Member toMember(MemberDto memberDto) {
         Member member = new Member();
         member.setMail(memberDto.getMail());
         member.setPw(memberDto.getPw());

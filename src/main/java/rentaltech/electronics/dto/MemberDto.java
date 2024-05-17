@@ -7,7 +7,7 @@ import rentaltech.electronics.entity.Member;
 
 @Getter
 @Setter
-public class memberDto {
+public class MemberDto {
 
     @NotNull(message = "이메일 입력은 필수입니다.")
     private String mail;
@@ -27,8 +27,8 @@ public class memberDto {
     @NotNull(message = "주소 입력은 필수입니다.")
     private String address;
 
-    public static memberDto toMemberDto(Member member) {
-        memberDto memberDto = new memberDto();
+    public static MemberDto toMemberDto(Member member) {
+        MemberDto memberDto = new MemberDto();
         memberDto.setMail(member.getMail());
         memberDto.setPw(member.getPw());
         memberDto.setName(member.getName());

@@ -9,7 +9,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import rentaltech.electronics.dto.memberDto;
+import rentaltech.electronics.dto.MemberDto;
 import rentaltech.electronics.service.MemberService;
 
 @Controller
@@ -20,13 +20,13 @@ public class MemberController {
 
 
     @GetMapping("/members/join")
-    public String joinForm(memberDto memberDto, Model model) {
+    public String joinForm(MemberDto memberDto, Model model) {
         model.addAttribute("joinForm", memberDto);
         return "members/joinForm";
     }
 
     @PostMapping("/members/join")
-    public String join(@Valid memberDto form, BindingResult result, Model model) {
+    public String join(@Valid MemberDto form, BindingResult result, Model model) {
         if (result.hasErrors()) {
             return "members/joinForm";
         }
@@ -46,14 +46,14 @@ public class MemberController {
     }
 
     @GetMapping("/members/login")
-    public String loginForm(memberDto memberDto, Model model) {
+    public String loginForm(MemberDto memberDto, Model model) {
         model.addAttribute("loginForm", memberDto);
         return "members/loginForm";
     }
 
     @PostMapping("/members/login")  // session : 로그인 유지
-    public String login(@ModelAttribute memberDto memberDto, Model model, HttpSession session) {
-        memberDto loginResult = memberService.login(memberDto);
+    public String login(@ModelAttribute MemberDto memberDto, Model model, HttpSession session) {
+        MemberDto loginResult = memberService.login(memberDto);
 
         try {
             if (loginResult != null) {
