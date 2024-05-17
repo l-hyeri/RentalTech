@@ -7,6 +7,7 @@ import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.Setter;
 import rentaltech.electronics.constant.ItemStockStatus;
+import rentaltech.electronics.dto.ItemDto;
 import rentaltech.electronics.exception.OutOfStockException;
 
 @Getter
@@ -29,6 +30,19 @@ public class Item { // 카테고리(categories-List)
     private String details; // 제품 설명
 
     private int period; // 렌탈 기간
+
+    public static Item toItem(ItemDto itemDto) {
+        Item item = new Item();
+        item.setSerial_num(itemDto.getSerial_num());
+        item.setItem_name(itemDto.getItem_name());
+        item.setPrice(item.getPrice());
+        item.setStockStatus(ItemStockStatus.SELL);
+        item.setStock(itemDto.getStock());
+        item.setDetails(itemDto.getDetails());
+        item.setPeriod(itemDto.getPeriod());
+
+        return item;
+    }
 
     public void removeStock(int stock) {
         int remainStock = this.stock - stock;
