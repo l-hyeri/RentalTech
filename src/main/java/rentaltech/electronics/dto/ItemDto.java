@@ -5,6 +5,9 @@ import lombok.Getter;
 import lombok.Setter;
 import rentaltech.electronics.entity.Item;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Getter
 @Setter
 public class ItemDto {
@@ -21,6 +24,8 @@ public class ItemDto {
     private String details; // 제품 설명
 
     private int period; // 렌탈 기간
+
+    private List<ItemImgDto> itemImgDtoList = new ArrayList<>();
 
     public static ItemDto toItemDto(Item item) {
         ItemDto itemDto = new ItemDto();

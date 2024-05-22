@@ -1,16 +1,14 @@
 package rentaltech.electronics.dto;
 
-import jakarta.persistence.FetchType;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.Setter;
-import rentaltech.electronics.entity.Item;
 import rentaltech.electronics.entity.ItemImg;
 
 @Getter
 @Setter
 public class ItemImgDto {
+
+    private Long itemImgNum;
 
     private String imgName; // 이미지 파일명
 

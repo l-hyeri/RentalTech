@@ -18,7 +18,6 @@ public class MemberController {
 
     private final MemberService memberService;
 
-
     @GetMapping("/members/join")
     public String joinForm(MemberDto memberDto, Model model) {
         model.addAttribute("joinForm", memberDto);
@@ -66,5 +65,11 @@ public class MemberController {
             return "members/loginForm";
         }
         return "adminHome";
+    }
+
+    @GetMapping("/members/editMember")
+    public String editForm(MemberDto memberDto, Model model) {
+        model.addAttribute("joinForm", memberDto);
+        return "members/joinForm";
     }
 }

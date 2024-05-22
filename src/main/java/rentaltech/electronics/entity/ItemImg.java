@@ -24,4 +24,10 @@ public class ItemImg {
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="serialNum")
     private Item item;
+
+    public void updateItemImg(String originName, String imgName, String imgUrl) {
+        this.originName = originName;
+        this.imgName = imgName;
+        this.imgUrl = imgUrl;
+    }
 }
