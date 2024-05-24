@@ -1,5 +1,6 @@
 package rentaltech.electronics.controller;
 
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +22,7 @@ public class MemberController {
     @GetMapping("/members/join")
     public String joinForm(MemberDto memberDto, Model model) {
         model.addAttribute("joinForm", memberDto);
+        model.addAttribute("isEdit", false);
         return "members/joinForm";
     }
 
@@ -68,8 +70,26 @@ public class MemberController {
     }
 
     @GetMapping("/members/editMember")
-    public String editForm(MemberDto memberDto, Model model) {
-        model.addAttribute("joinForm", memberDto);
-        return "members/joinForm";
+    public String showForm(Model model, HttpSession session,MemberDto memberDto) {
+        String mail = (String) session.getAttribute("mail");
+
+        if (mail == null) {
+            System.out.println("사용자 정보가 세션에 없습니다.");
+            return "redirect:/members/login";
+        }
+
+        try {
+            System.out.println("세션에 저장된 사용자: " + mail);
+            //MemberDto memberDto = memberService.findByMail(mail);
+            model.addAttribute("joinForm", memberDto);
+
+            // 회원가입 폼을 동일하게 사용하기에 회원가입인지 회원정보 수정인지 확인하기 위함.
+            model.addAttribute("isEdit", true);
+            return "members/joinForm";
+
+        } catch (EntityNotFoundException e) {
+            model.addAttribute("errorMessage", "존재하지 않는 아이디 입니다.");
+            return "redirect:/members/login";
+        }
     }
 }
