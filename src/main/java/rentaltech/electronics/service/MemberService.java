@@ -40,24 +40,10 @@ public class MemberService {
         }
     }
 
-    @Transactional(readOnly = true)
-    public MemberDto findByMail(String mail) {    // 회원정보 수정을 위한 이메일 조회
-        Optional<Member> findMember = memberRepository.findByMail(mail);
-
-        if (findMember.isPresent()) {
-            Member member = findMember.get();
-            MemberDto dto = MemberDto.toMemberDto(member);
-            return dto;
-        } else {
-            return null;
-        }
-    }
-
-    public void edit(MemberDto memberDto) {
-        Optional<Member> findMember = memberRepository.findByMail(memberDto.getMail());
-
-        Member member = findMember.get();
-        member.editMember(memberDto);
+    public MemberDto findMemberByMail(String mail) {
+        Member member = memberRepository.findByMail(mail)
+                .orElseThrow(() -> new IllegalArgumentException("해당 사용자가 존재하지 않습니다. email=" + mail));
+        return MemberDto.toMemberDto(member);
     }
 
     // 중복회원 확인 (회원가입)

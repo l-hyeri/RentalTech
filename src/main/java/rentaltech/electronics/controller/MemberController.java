@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import rentaltech.electronics.dto.MemberDto;
+import rentaltech.electronics.entity.Member;
+import rentaltech.electronics.repository.MemberRepository;
 import rentaltech.electronics.service.MemberService;
 
 @Controller
@@ -18,6 +20,7 @@ import rentaltech.electronics.service.MemberService;
 public class MemberController {
 
     private final MemberService memberService;
+    private final MemberRepository memberRepository;
 
     @GetMapping("/members/join")
     public String joinForm(MemberDto memberDto, Model model) {
@@ -70,20 +73,16 @@ public class MemberController {
     }
 
     @GetMapping("/members/editMember")
-    public String showForm(Model model, HttpSession session,MemberDto memberDto) {
+    public String editForm(Model model, HttpSession session) {
         String mail = (String) session.getAttribute("mail");
 
         if (mail == null) {
-            System.out.println("사용자 정보가 세션에 없습니다.");
             return "redirect:/members/login";
         }
 
         try {
-            System.out.println("세션에 저장된 사용자: " + mail);
-            //MemberDto memberDto = memberService.findByMail(mail);
-            model.addAttribute("joinForm", memberDto);
-
-            // 회원가입 폼을 동일하게 사용하기에 회원가입인지 회원정보 수정인지 확인하기 위함.
+            MemberDto memberDto = memberService.findMemberByMail(mail);
+            model.addAttribute("memberDto", memberDto);
             model.addAttribute("isEdit", true);
             return "members/joinForm";
 
