@@ -70,7 +70,7 @@ public class MemberController {
     }
 
     @GetMapping("/members/editMember")
-    public String editForm(Model model, HttpSession session) {
+    public String MemberEditForm(Model model, HttpSession session) {
         String mail = (String) session.getAttribute("mail");
 
         if (mail == null) {
@@ -90,7 +90,7 @@ public class MemberController {
     }
 
     @PostMapping("/members/editMember")
-    public String edit(@Valid MemberDto memberDto, BindingResult result, Model model) {
+    public String MemberEdit(@Valid MemberDto memberDto, BindingResult result, Model model) {
         if (result.hasErrors()) {
             model.addAttribute("isEdit", true);
             return "members/joinForm";
