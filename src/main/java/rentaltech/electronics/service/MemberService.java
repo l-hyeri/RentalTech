@@ -40,6 +40,19 @@ public class MemberService {
         }
     }
 
+    public void edit(MemberDto memberDto) {
+        Member member = memberRepository.findByMail(memberDto.getMail())
+                .orElseThrow(() -> new IllegalArgumentException("해당 사용자가 존재하지 않습니다. email=" + memberDto.getMail()));
+
+        member.setPw(memberDto.getPw());
+        member.setName(memberDto.getName());
+        member.setPhone(memberDto.getPhone());
+        member.setAddress(memberDto.getAddress());
+
+        memberRepository.save(member);
+    }
+
+    // 회원정보 수정을 위한 사용자 정보 찾기
     public MemberDto findMemberByMail(String mail) {
         Member member = memberRepository.findByMail(mail)
                 .orElseThrow(() -> new IllegalArgumentException("해당 사용자가 존재하지 않습니다. email=" + mail));

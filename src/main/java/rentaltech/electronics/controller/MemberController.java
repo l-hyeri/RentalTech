@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import rentaltech.electronics.dto.MemberDto;
-import rentaltech.electronics.entity.Member;
-import rentaltech.electronics.repository.MemberRepository;
 import rentaltech.electronics.service.MemberService;
 
 @Controller
@@ -20,7 +18,6 @@ import rentaltech.electronics.service.MemberService;
 public class MemberController {
 
     private final MemberService memberService;
-    private final MemberRepository memberRepository;
 
     @GetMapping("/members/join")
     public String joinForm(MemberDto memberDto, Model model) {
@@ -89,6 +86,28 @@ public class MemberController {
         } catch (EntityNotFoundException e) {
             model.addAttribute("errorMessage", "존재하지 않는 아이디 입니다.");
             return "redirect:/members/login";
+        }
+    }
+
+    @PostMapping("/members/editMember")
+    public String edit(@Valid MemberDto memberDto, BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            model.addAttribute("isEdit", true);
+            return "members/joinForm";
+        }
+
+        if (!memberDto.isPWEqual()) {
+            model.addAttribute("isEdit", true);
+            System.out.println("비밀번호 불일치");
+            return "members/joinForm";
+        }
+
+        try {
+            memberService.edit(memberDto);
+            return "redirect:/";
+        } catch (Exception e) {
+            model.addAttribute("errorMessage", e.getMessage());
+            return "members/joinForm";
         }
     }
 }
