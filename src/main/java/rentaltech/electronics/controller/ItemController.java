@@ -1,5 +1,6 @@
 package rentaltech.electronics.controller;
 
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -10,6 +11,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import rentaltech.electronics.dto.ItemDto;
+import rentaltech.electronics.dto.MemberDto;
+import rentaltech.electronics.entity.Item;
 import rentaltech.electronics.service.ItemService;
 
 import java.util.List;
@@ -35,11 +38,19 @@ public class ItemController {
         }
 
         try {
-            itemService.save(itemDto,itemImgFileList);
+            itemService.save(itemDto, itemImgFileList);
         } catch (Exception e) {
             model.addAttribute("errorMessage", e.getMessage());
             return "items/itemRegisterForm";
         }
         return "adminHome";
+    }
+
+    @GetMapping("/items/list")
+    public String list(Model model) {   // 전체 상품 조회
+        List<Item> items = itemService.findItemList();
+
+        model.addAttribute("items", items);
+        return "items/itemList";
     }
 }

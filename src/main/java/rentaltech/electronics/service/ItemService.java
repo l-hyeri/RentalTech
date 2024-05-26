@@ -40,6 +40,10 @@ public class ItemService {
         }
     }
 
+    public List<Item> findItemList() {  // 전체 상품 조회
+        return itemRepository.findAll();
+    }
+
     public void validateDuplicateItem(Item item) {  // 중복된 상품이 있는지 확인
         Optional<Item> findItem = itemRepository.findBySerialNum(item.getSerialNum()
         );

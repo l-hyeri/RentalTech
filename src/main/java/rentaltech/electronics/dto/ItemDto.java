@@ -3,6 +3,7 @@ package rentaltech.electronics.dto;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
+import rentaltech.electronics.constant.ItemStockStatus;
 import rentaltech.electronics.entity.Item;
 
 import java.util.ArrayList;
@@ -24,6 +25,8 @@ public class ItemDto {
     private String details; // 제품 설명
 
     private int period; // 렌탈 기간
+
+    private ItemStockStatus stockStatus;    // 재고 상태 (판매중, 품절)
 
     private List<ItemImgDto> itemImgDtoList = new ArrayList<>();
 
