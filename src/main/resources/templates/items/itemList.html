@@ -86,7 +86,7 @@
             <td th:text="${item.stock}"></td>
             <td th:text="${item.stockStatus==T(rentaltech.electronics.constant.ItemStockStatus).SELL}?'판매중' :'품절'"></td>
             <td>
-                <a href="#" th:href="@{/items/{serialNum}/edit (id=${item.serialNum})}"
+                <a th:href="@{/items/edit/{serialNum} (serialNum=${item.serialNum})}"
                    class="btn btn-primary" role="button">수정</a>
             </td>
         </tr>

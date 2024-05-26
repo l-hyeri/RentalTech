@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -23,17 +23,22 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container px-4 px-lg-5">
         <a class="navbar-brand" href="/">RentalTech</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span
+                class="navbar-toggler-icon"></span></button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
                 <li class="nav-item"><a class="nav-link active" aria-current="page" href="#!">Home</a></li>
                 <li class="nav-item"><a class="nav-link" href="#!">마이페이지</a></li>
                 <li class="nav-item"><a class="nav-link" href="#!">About</a></li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Shop</a>
+                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button"
+                       data-bs-toggle="dropdown" aria-expanded="false">Shop</a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <li><a class="dropdown-item" href="#!">All Products</a></li>
-                        <li><hr class="dropdown-divider" /></li>
+                        <li>
+                            <hr class="dropdown-divider"/>
+                        </li>
                         <li><a class="dropdown-item" href="#!">Popular Items</a></li>
                         <li><a class="dropdown-item" href="#!">New Arrivals</a></li>
                     </ul>
@@ -61,7 +66,8 @@
 <!-- Section-->
 <!-- 이미지파일 업로드할 때 MultipartFile를 사용하기 위해 enctype="multipart/form-data" 추가-->
 <section class="py-5">
-    <form action="/items/register" role="form" th:object="${itemDto}" method="post" enctype="multipart/form-data">
+    <form th:action="${isEdit} ? @{/items/edit/{serialNum}(serialNum=${itemDto.serialNum})} : @{/items/register}"
+          th:object="${itemDto}" method="post" enctype="multipart/form-data">
         시리얼 번호 : <input type="text" th:field="*{serialNum}" class="form-control"> <br>
         상품명 : <input type="text" th:field="*{item_name}" class="form-control"> <br>
         가격 : <input type="number" th:field="*{price}" class="form-control"> <br>
@@ -78,7 +84,7 @@
             </div>
         </div>
 
-        <div th:if = "${not #lists.isEmpty(itemDto.itemImgDtoList)}">   <!-- 이미지 리스트가 존재하는 경우-->
+        <div th:if="${not #lists.isEmpty(itemDto.itemImgDtoList)}">   <!-- 이미지 리스트가 존재하는 경우-->
             <div class="form-group" th:each="itemImgDto, status: ${itemFormDto.itemImgDtoList}">
                 <div class="custom-file img-div">
                     <input type="file" class="custom-file-input" name="itemImgFile">
@@ -89,7 +95,7 @@
             </div>
         </div>
 
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary" th:text="${isEdit} ? '상품정보 수정' : '상품등록'"></button>
     </form>
 </section>
 <!-- Footer-->
