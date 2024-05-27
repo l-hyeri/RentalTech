@@ -68,12 +68,37 @@
 <section class="py-5">
     <form th:action="${isEdit} ? @{/items/edit/{serialNum}(serialNum=${itemDto.serialNum})} : @{/items/register}"
           th:object="${itemDto}" method="post" enctype="multipart/form-data">
-        시리얼 번호 : <input type="text" th:field="*{serialNum}" class="form-control"> <br>
-        상품명 : <input type="text" th:field="*{item_name}" class="form-control"> <br>
-        가격 : <input type="number" th:field="*{price}" class="form-control"> <br>
-        재고 개수 : <input type="text" th:field="*{stock}" class="form-control"> <br>
-        제품 설명 : <input type="text" th:field="*{details}" class="form-control"> <br>
-        렌탈 기간 : <input type="text" th:field="*{period}" class="form-control"> <br>
+        <div class="form-group">
+            시리얼 번호 <input type="text" th:field="*{serialNum}" class="form-control"
+                          th:readonly="${isEdit}" required
+                          placeholder="시리얼 번호을 입력하세요">
+        </div>
+        <div class="form-group">
+            상품명 <input type="text" th:field="*{item_name}" class="form-control"
+                          placeholder="상품명을 입력하세요">
+        </div>
+        <div class="form-group">
+            가격 <input type="text" th:field="*{price}" class="form-control"
+                          placeholder="가격을 입력하세요">
+        </div>
+        <div class="form-group">
+            재고 개수 <input type="text" th:field="*{stock}" class="form-control"
+                          placeholder="재고 개수을 입력하세요">
+        </div>
+        <div class="form-group">
+            제품 설명 <input type="text" th:field="*{details}" class="form-control"
+                          placeholder="제품 설명을 입력하세요">
+        </div>
+        <div class="form-group">
+            렌탈 기간 <input type="text" th:field="*{period}" class="form-control"
+                          placeholder="렌탈 기간을 입력하세요">
+        </div>
+        <div class="form-group">
+            <select th:field="*{stockStatus}" class="custom-select">
+                <option value="SELL">판매중</option>
+                <option value="SOLD_OUT">품절</option>
+            </select>
+        </div>
 
         <div th:if="${#lists.isEmpty(itemDto.itemImgDtoList)}"> <!-- 빈 이미지 리스트 처리를 통한 5개의 파일 입력 필드 생성-->
             <div class="form-group" th:each="num: ${#numbers.sequence(1,5)}">

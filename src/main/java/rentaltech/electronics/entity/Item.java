@@ -36,7 +36,7 @@ public class Item { // 카테고리(categories-List)
         item.setSerialNum(itemDto.getSerialNum());
         item.setItem_name(itemDto.getItem_name());
         item.setPrice(itemDto.getPrice());
-        item.setStockStatus(ItemStockStatus.SELL);
+        item.setStockStatus(itemDto.getStockStatus());
         item.setStock(itemDto.getStock());
         item.setDetails(itemDto.getDetails());
         item.setPeriod(itemDto.getPeriod());
