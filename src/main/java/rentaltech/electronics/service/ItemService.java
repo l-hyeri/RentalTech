@@ -6,6 +6,7 @@ import org.springframework.web.multipart.MultipartFile;
 import rentaltech.electronics.dto.ItemDto;
 import rentaltech.electronics.entity.Item;
 import rentaltech.electronics.entity.ItemImg;
+import rentaltech.electronics.repository.ItemImgRepository;
 import rentaltech.electronics.repository.ItemRepository;
 
 import java.util.List;
@@ -16,6 +17,7 @@ import java.util.Optional;
 public class ItemService {
 
     private final ItemRepository itemRepository;
+    private final ItemImgRepository itemImgRepository;
     private final ItemImgService itemImgService;
 
     public void save(ItemDto itemDto, List<MultipartFile> itemImgFileList)throws Exception { // 상품 등록
@@ -42,6 +44,12 @@ public class ItemService {
 
     public List<Item> findItemList() {  // 전체 상품 조회
         return itemRepository.findAll();
+    }
+
+    public ItemDto findItemDetails(Long serialNum) {
+        Item item = itemRepository.findBySerialNum(serialNum)
+                .orElseThrow(() -> new IllegalArgumentException("상품없음"));
+        return ItemDto.toItemDto(item);
     }
 
     public void validateDuplicateItem(Item item) {  // 중복된 상품이 있는지 확인

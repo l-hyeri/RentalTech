@@ -5,7 +5,10 @@ import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import rentaltech.electronics.constant.ItemStockStatus;
 import rentaltech.electronics.constant.Role;
+import rentaltech.electronics.entity.Item;
+import rentaltech.electronics.entity.ItemImg;
 import rentaltech.electronics.entity.Member;
 
 /**
@@ -21,6 +24,7 @@ public class InitDB {
     @PostConstruct
     public void init() {
         initService.dbInit1();
+        initService.dbInit2();
     }
 
     @Component
@@ -33,6 +37,14 @@ public class InitDB {
         public void dbInit1() {
             Member member = createMember();
             em.persist(member);
+
+            Item item1=createItem(111L,"tv1",1000,2,"tv1번 상품",20240526);
+            em.persist(item1);
+        }
+
+        public void dbInit2() {
+            Item item1=createItem(222L,"aircondition",2000,3,"에어컨1번 상품",20240527);
+            em.persist(item1);
         }
 
         private Member createMember() {
@@ -45,6 +57,19 @@ public class InitDB {
             member.setRole(Role.ADMIN);
 
             return member;
+        }
+
+        private Item createItem(Long serialNum, String name, int price, int stock, String details,int period) {
+            Item item = new Item();
+            item.setSerialNum(serialNum);
+            item.setItem_name(name);
+            item.setPrice(price);
+            item.setStockStatus(ItemStockStatus.SELL);
+            item.setStock(stock);
+            item.setDetails(details);
+            item.setPeriod(period);
+
+            return item;
         }
     }
 
