@@ -78,6 +78,9 @@ public class ItemController {
 
         try {
             itemService.editItem(itemDto, serialNum);
+
+            List<Item> items = itemService.findItemList();
+            model.addAttribute("items", items);
             return "items/itemList";
         } catch (Exception e) {
             model.addAttribute("errorMessage", e.getMessage());
