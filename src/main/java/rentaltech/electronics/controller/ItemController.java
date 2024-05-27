@@ -55,15 +55,32 @@ public class ItemController {
         return "items/itemList";
     }
 
-    @GetMapping(value = "/items/edit/{serialNum}")
+    @GetMapping("/items/edit/{serialNum}")
     public String ItemEditForm(@PathVariable("serialNum") Long serialNum, Model model) {
         try {
             ItemDto itemDto = itemService.findItemDetails(serialNum);
             model.addAttribute("itemDto", itemDto);
             model.addAttribute("isEdit", true);
             return "items/itemRegisterForm";
+
         } catch (EntityNotFoundException e) {
             model.addAttribute("errorMessage", "존재하지 않는 상품입니다.");
+            return "items/itemList";
+        }
+    }
+
+    @PostMapping("/items/edit/{serialNum}")
+    public String ItemEdit(@PathVariable("serialNum") Long serialNum, @Valid ItemDto itemDto, BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            model.addAttribute("isEdit", true);
+            return "items/itemList";
+        }
+
+        try {
+            itemService.editItem(itemDto, serialNum);
+            return "items/itemList";
+        } catch (Exception e) {
+            model.addAttribute("errorMessage", e.getMessage());
             return "items/itemList";
         }
     }

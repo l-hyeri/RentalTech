@@ -48,8 +48,22 @@ public class ItemService {
 
     public ItemDto findItemDetails(Long serialNum) {
         Item item = itemRepository.findBySerialNum(serialNum)
-                .orElseThrow(() -> new IllegalArgumentException("상품없음"));
+                .orElseThrow(() -> new IllegalArgumentException("해당 상품이 존재하지 않습니다."));
         return ItemDto.toItemDto(item);
+    }
+
+    public void editItem(ItemDto itemDto, Long serialNum) {
+        Item item = itemRepository.findBySerialNum(serialNum)
+                .orElseThrow(() -> new IllegalArgumentException("해당 상품이 존재하지 않습니다."));
+
+        item.setItem_name(itemDto.getItem_name());
+        item.setPrice(itemDto.getPrice());
+        item.setStock(itemDto.getStock());
+        item.setStockStatus(itemDto.getStockStatus());
+        item.setDetails(itemDto.getDetails());
+        item.setPeriod(itemDto.getPeriod());
+
+        itemRepository.save(item);
     }
 
     public void validateDuplicateItem(Item item) {  // 중복된 상품이 있는지 확인
