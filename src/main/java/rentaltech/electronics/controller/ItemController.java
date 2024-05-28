@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import rentaltech.electronics.dto.ItemDto;
-import rentaltech.electronics.dto.ItemImgDto;
 import rentaltech.electronics.entity.Item;
 import rentaltech.electronics.service.ItemService;
 
@@ -60,9 +59,7 @@ public class ItemController {
     public String ItemEditForm(@PathVariable("serialNum") Long serialNum, Model model) {
         try {
             ItemDto itemDto = itemService.findItemDetails(serialNum);
-//            List<ItemImgDto> itemImgDtos = itemService.findItemImgs(serialNum);
             model.addAttribute("itemDto", itemDto);
-//            model.addAttribute("itemImgDtoList", itemImgDtos);
             model.addAttribute("isEdit", true);
             return "items/itemRegisterForm";
 
@@ -73,20 +70,27 @@ public class ItemController {
     }
 
     @PostMapping("/items/edit/{serialNum}")
-    public String ItemEdit(@PathVariable("serialNum") Long serialNum, @Valid ItemDto itemDto, BindingResult result, Model model) {
+    public String ItemEdit(@PathVariable("serialNum") Long serialNum, @Valid ItemDto itemDto, BindingResult result, Model model,
+                           @RequestParam(name = "itemImgFile") List<MultipartFile> itemImgFileList) {
         if (result.hasErrors()) {
             model.addAttribute("isEdit", true);
+
+            List<Item> items = itemService.findItemList();
+            model.addAttribute("items", items);
             return "items/itemList";
         }
 
         try {
-            itemService.editItem(itemDto, serialNum);
+            itemService.editItem(itemDto, serialNum, itemImgFileList);
 
             List<Item> items = itemService.findItemList();
             model.addAttribute("items", items);
             return "items/itemList";
         } catch (Exception e) {
             model.addAttribute("errorMessage", e.getMessage());
+
+            List<Item> items = itemService.findItemList();
+            model.addAttribute("items", items);
             return "items/itemList";
         }
     }

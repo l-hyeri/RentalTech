@@ -1,5 +1,6 @@
 package rentaltech.electronics.service;
 
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -34,5 +35,25 @@ public class ItemImgService {
 
         itemImg.updateItemImg(originImgName, imgName, imgUrl);
         imgRepository.save(itemImg);
+    }
+
+    // 이미지 수정
+    public void editImg(Long itemImgId, MultipartFile itemImgFile) throws IOException {
+        
+        // 상품 이미지를 수정
+        if (!itemImgFile.isEmpty()) {
+            ItemImg saveImg = imgRepository.findById(itemImgId).orElseThrow(EntityNotFoundException::new);
+
+            // 기존 이미지 파일이 존재하면 삭제
+            if (!StringUtils.isEmpty(saveImg.getImgName())) {
+                fileService.deleteFile(itemImgLocation + "/" + saveImg.getImgName());
+            }
+
+            String originName = itemImgFile.getOriginalFilename();
+            String imgName = fileService.uploadImg(itemImgLocation, originName, itemImgFile.getBytes());
+            String imgUrl = "/images/item/" + imgName;
+            saveImg.updateItemImg(originName, imgName, imgUrl);
+            imgRepository.save(saveImg);
+        }
     }
 }

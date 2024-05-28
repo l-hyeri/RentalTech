@@ -3,6 +3,7 @@ package rentaltech.electronics.service;
 import lombok.extern.java.Log;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.UUID;
@@ -28,5 +29,16 @@ public class FileService {
         fos.close();
 
         return savedFileName;
+    }
+
+    public void deleteFile(String filePath) {
+        File deleteFile = new File(filePath);
+
+        if (deleteFile.exists()) {
+            deleteFile.delete();
+            log.info("파일 삭제 완료");
+        } else {
+            log.info("파일 존재x");
+        }
     }
 }

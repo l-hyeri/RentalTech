@@ -29,6 +29,7 @@ public class ItemDto {
     private ItemStockStatus stockStatus;    // 재고 상태 (판매중, 품절)
 
     private List<ItemImgDto> itemImgDtoList = new ArrayList<>();
+    private List<Long> itemImgIds = new ArrayList<>();
 
     public static ItemDto toItemDto(Item item) {
         ItemDto itemDto = new ItemDto();

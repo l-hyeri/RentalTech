@@ -22,7 +22,7 @@ public class ItemService {
     private final ItemImgRepository itemImgRepository;
     private final ItemImgService itemImgService;
 
-    public void save(ItemDto itemDto, List<MultipartFile> itemImgFileList)throws Exception { // 상품 등록
+    public void save(ItemDto itemDto, List<MultipartFile> itemImgFileList) throws Exception { // 상품 등록
 
         // 상품 정보 등록 (1)
         Item item = Item.toItem(itemDto);
@@ -40,7 +40,7 @@ public class ItemService {
             } else {
                 itemImg.setRepreImg("N");
             }
-            itemImgService.saveImg(itemImg,itemImgFileList.get(i));
+            itemImgService.saveImg(itemImg, itemImgFileList.get(i));
         }
     }
 
@@ -63,7 +63,7 @@ public class ItemService {
         return itemDto;
     }
 
-    public void editItem(ItemDto itemDto, Long serialNum) { // 상품 정보 수정
+    public void editItem(ItemDto itemDto, Long serialNum, List<MultipartFile> itemImgFileList) throws Exception { // 상품 정보 수정
         Item item = itemRepository.findBySerialNum(serialNum)
                 .orElseThrow(() -> new IllegalArgumentException("해당 상품이 존재하지 않습니다."));
 
@@ -73,8 +73,31 @@ public class ItemService {
         item.setStockStatus(itemDto.getStockStatus());
         item.setDetails(itemDto.getDetails());
         item.setPeriod(itemDto.getPeriod());
-
         itemRepository.save(item);
+
+
+        // 이미지 파일 업데이트
+        List<ItemImg> itemImgList = itemImgRepository.findByItemSerialNum(serialNum);
+
+        for (int i = 0; i < itemImgFileList.size(); i++) {
+            MultipartFile itemImgFile = itemImgFileList.get(i);
+
+            if (i < itemImgList.size()) {
+                // 기존 이미지를 수정
+                itemImgService.editImg(itemImgList.get(i).getItemImgNum(), itemImgFile);
+            } else {
+                // 새로운 이미지를 추가
+                ItemImg itemImg = new ItemImg();
+                itemImg.setItem(item);
+                if (i == 0) {
+                    itemImg.setRepreImg("Y");
+                } else {
+                    itemImg.setRepreImg("N");
+                }
+                itemImgService.saveImg(itemImg, itemImgFile);
+            }
+        }
+
     }
 
     public void validateDuplicateItem(Item item) {  // 중복된 상품이 있는지 확인
