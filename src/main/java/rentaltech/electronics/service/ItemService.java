@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import rentaltech.electronics.dto.ItemDto;
+import rentaltech.electronics.dto.ItemImgDto;
 import rentaltech.electronics.entity.Item;
 import rentaltech.electronics.entity.ItemImg;
 import rentaltech.electronics.repository.ItemImgRepository;
@@ -11,6 +12,7 @@ import rentaltech.electronics.repository.ItemRepository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -46,13 +48,22 @@ public class ItemService {
         return itemRepository.findAll();
     }
 
-    public ItemDto findItemDetails(Long serialNum) {
+    public ItemDto findItemDetails(Long serialNum) {    // 상품 상세 조회
         Item item = itemRepository.findBySerialNum(serialNum)
                 .orElseThrow(() -> new IllegalArgumentException("해당 상품이 존재하지 않습니다."));
-        return ItemDto.toItemDto(item);
+
+        ItemDto itemDto = ItemDto.toItemDto(item);
+
+        List<ItemImg> itemImgList = itemImgRepository.findByItemSerialNum(serialNum);
+        List<ItemImgDto> itemImgDtoList = itemImgList.stream()
+                .map(ItemImgDto::toItemImgDto)
+                .collect(Collectors.toList());
+
+        itemDto.setItemImgDtoList(itemImgDtoList);
+        return itemDto;
     }
 
-    public void editItem(ItemDto itemDto, Long serialNum) {
+    public void editItem(ItemDto itemDto, Long serialNum) { // 상품 정보 수정
         Item item = itemRepository.findBySerialNum(serialNum)
                 .orElseThrow(() -> new IllegalArgumentException("해당 상품이 존재하지 않습니다."));
 

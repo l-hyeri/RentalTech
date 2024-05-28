@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import rentaltech.electronics.dto.ItemDto;
+import rentaltech.electronics.dto.ItemImgDto;
 import rentaltech.electronics.entity.Item;
 import rentaltech.electronics.service.ItemService;
 
@@ -59,7 +60,9 @@ public class ItemController {
     public String ItemEditForm(@PathVariable("serialNum") Long serialNum, Model model) {
         try {
             ItemDto itemDto = itemService.findItemDetails(serialNum);
+//            List<ItemImgDto> itemImgDtos = itemService.findItemImgs(serialNum);
             model.addAttribute("itemDto", itemDto);
+//            model.addAttribute("itemImgDtoList", itemImgDtos);
             model.addAttribute("isEdit", true);
             return "items/itemRegisterForm";
 
