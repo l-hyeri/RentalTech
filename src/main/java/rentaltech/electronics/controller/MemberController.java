@@ -49,7 +49,7 @@ public class MemberController {
     @GetMapping("/members/login")
     public String loginForm(MemberDto memberDto, Model model) {
         model.addAttribute("loginForm", memberDto);
-        return "members/loginForm";
+        return "/";
     }
 
     @PostMapping("/members/login")  // session : 로그인 유지
@@ -60,11 +60,11 @@ public class MemberController {
             if (loginResult != null) {
                 session.setAttribute("mail", loginResult.getMail());
             } else {
-                return "members/loginForm";
+                return "main";
             }
         } catch (Exception e) {
             model.addAttribute("errorMessage", e.getMessage());
-            return "members/loginForm";
+            return "main";
         }
         return "adminHome";
     }
@@ -74,7 +74,7 @@ public class MemberController {
         String mail = (String) session.getAttribute("mail");
 
         if (mail == null) {
-            return "redirect:/members/login";
+            return "redirect:/";
         }
 
         try {
@@ -85,7 +85,7 @@ public class MemberController {
 
         } catch (EntityNotFoundException e) {
             model.addAttribute("errorMessage", "존재하지 않는 아이디 입니다.");
-            return "redirect:/members/login";
+            return "redirect:/";
         }
     }
 

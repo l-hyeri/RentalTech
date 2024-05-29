@@ -91,6 +91,44 @@
   }
 }
 
+.main-body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.main-form-container {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  width: 50%; /* 폼 크기를 내용에 맞게 조정 fit-content*/
+  max-width: 600px;
+  margin: auto; /* 폼을 가운데 정렬 */
+}
+
+.main-form-control {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.main-input-submit {
+  width: 100%;
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.main-input-submit:hover {
+  background-color: #0056b3;
+}
+
 body {
   margin: 0;
   font-family: var(--bs-body-font-family);

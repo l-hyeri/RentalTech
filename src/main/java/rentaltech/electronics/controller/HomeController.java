@@ -9,8 +9,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class HomeController {
 
     @RequestMapping("/")
-    public String login() {
+    public String main() {
         log.info("home controller");
-        return "home";
+        return "main";
+    }
+
+    @RequestMapping("/adminHome")
+    public String admin() {
+        log.info("admin controller");
+        return "adminHome";
+    }
+
+    @RequestMapping("/userHome")
+    public String user() {
+        log.info("user controller");
+        return "userHome";
     }
 }

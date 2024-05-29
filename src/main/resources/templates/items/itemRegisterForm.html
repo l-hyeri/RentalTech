@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
     <meta name="description" content=""/>
     <meta name="author" content=""/>
-    <title>렌탈테크</title>
+    <title>RentalTech</title>
     <!-- Favicon-->
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico"/>
     <!-- Bootstrap icons-->
@@ -22,27 +22,16 @@
 <!-- Navigation-->
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container px-4 px-lg-5">
-        <a class="navbar-brand" href="/">RentalTech</a>
+        <a class="navbar-brand" href="/adminHome">RentalTech</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span
                 class="navbar-toggler-icon"></span></button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-                <li class="nav-item"><a class="nav-link active" aria-current="page" href="#!">Home</a></li>
-                <li class="nav-item"><a class="nav-link" href="#!">마이페이지</a></li>
-                <li class="nav-item"><a class="nav-link" href="#!">About</a></li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button"
-                       data-bs-toggle="dropdown" aria-expanded="false">Shop</a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="#!">All Products</a></li>
-                        <li>
-                            <hr class="dropdown-divider"/>
-                        </li>
-                        <li><a class="dropdown-item" href="#!">Popular Items</a></li>
-                        <li><a class="dropdown-item" href="#!">New Arrivals</a></li>
-                    </ul>
-                </li>
+                <li class="nav-item"><a class="nav-link active" aria-current="page" href="/adminHome">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="/members/editMember">회원정보 수정</a></li>
+                <li class="nav-item"><a class="nav-link" href="/items/register">상품등록</a></li>
+                <li class="nav-item"><a class="nav-link" href="/items/list">상품전체 조회</a></li>
             </ul>
             <form class="d-flex">
                 <button class="btn btn-outline-dark" type="submit">
@@ -58,74 +47,79 @@
 <header class="bg-dark py-5">
     <div class="container px-4 px-lg-5 my-5">
         <div class="text-center text-white">
-            <h1 class="display-4 fw-bolder">Shop in style</h1>
-            <p class="lead fw-normal text-white-50 mb-0">With this shop homepage template</p>
+            <h1 class="display-4 fw-bolder">Rent Your Tech</h1>
+            <p class="lead fw-normal text-white-50 mb-0">Elevate your lifestyle with our premium electronics rental service</p>
         </div>
     </div>
 </header>
 <!-- Section-->
 <!-- 이미지파일 업로드할 때 MultipartFile를 사용하기 위해 enctype="multipart/form-data" 추가-->
-<section class="py-5">
+<section class="py-5 main-form-container">
     <form th:action="${isEdit} ? @{/items/edit/{serialNum}(serialNum=${itemDto.serialNum})} : @{/items/register}"
           th:object="${itemDto}" method="post" enctype="multipart/form-data">
         <div class="form-group">
-            시리얼 번호 <input type="text" th:field="*{serialNum}" class="form-control"
+            시리얼 번호 <input type="text" th:field="*{serialNum}" class="main-form-control"
                           th:readonly="${isEdit}" required
                           placeholder="시리얼 번호을 입력하세요">
         </div>
         <div class="form-group">
-            상품명 <input type="text" th:field="*{item_name}" class="form-control"
+            상품명 <input type="text" th:field="*{item_name}" class="main-form-control"
                           placeholder="상품명을 입력하세요">
         </div>
         <div class="form-group">
-            가격 <input type="text" th:field="*{price}" class="form-control"
+            가격 <input type="text" th:field="*{price}" class="main-form-control"
                           placeholder="가격을 입력하세요">
         </div>
         <div class="form-group">
-            재고 개수 <input type="text" th:field="*{stock}" class="form-control"
+            재고 개수 <input type="text" th:field="*{stock}" class="main-form-control"
                           placeholder="재고 개수을 입력하세요">
         </div>
         <div class="form-group">
-            제품 설명 <input type="text" th:field="*{details}" class="form-control"
+            제품 설명 <input type="text" th:field="*{details}" class="main-form-control"
                           placeholder="제품 설명을 입력하세요">
         </div>
         <div class="form-group">
-            렌탈 기간 <input type="text" th:field="*{period}" class="form-control"
+            렌탈 기간 <input type="text" th:field="*{period}" class="main-form-control"
                           placeholder="렌탈 기간을 입력하세요">
         </div>
         <div class="form-group">
-            <select th:field="*{stockStatus}" class="custom-select">
+            <select th:field="*{stockStatus}" class="form-select">
                 <option value="SELL">판매중</option>
                 <option value="SOLD_OUT">품절</option>
             </select>
         </div>
 
-        <div th:if="${#lists.isEmpty(itemDto.itemImgDtoList)}"> <!-- 빈 이미지 리스트 처리를 통한 5개의 파일 입력 필드 생성-->
-            <div class="form-group" th:each="num: ${#numbers.sequence(1,5)}">
-                <div class="custom-file img-div">
-                    <label class="custom-file-label" th:text="상품이미지 + ${num}"></label>
-                    <input type="file" class="custom-file-input" name="itemImgFile">
+        <div class="form-group" th:if="${#lists.isEmpty(itemDto.itemImgDtoList)}">
+            <label class="form-label">상품 이미지</label>
+            <div class="row">
+                <div class="col-md-6 col-lg-4 mb-3" th:each="num: ${#numbers.sequence(1,5)}">
+                    <div class="custom-file">
+                        <input type="file" class="form-control form-control-file" id="itemImgFile-${num}" name="itemImgFile">
+                        <label class="custom-file-label" for="itemImgFile-${num}" th:text="'상품이미지 ' + ${num}"></label>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <div th:if="${not #lists.isEmpty(itemDto.itemImgDtoList)}">   <!-- 이미지 리스트가 존재하는 경우-->
-            <div class="form-group" th:each="itemImgDto, status: ${itemDto.itemImgDtoList}">
-                <div class="custom-file img-div">
-                    <input type="file" class="custom-file-input" name="itemImgFile">
-                    <input type="hidden" name="itemImgNum" th:value="${itemImgDto.itemImgNum}">
-                    <label class="custom-file-label" th:text="${not #strings.isEmpty(itemImgDto.originName)}
-                     ? ${itemImgDto.originName} : '상품이미지' + ${status.index+1}"></label>
+        <div class="form-group" th:if="${not #lists.isEmpty(itemDto.itemImgDtoList)}">
+            <label class="form-label">상품 이미지</label>
+            <div class="row">
+                <div class="col-md-6 col-lg-4 mb-3" th:each="itemImgDto, status: ${itemDto.itemImgDtoList}">
+                    <div class="custom-file">
+                        <input type="file" class="form-control form-control-file" id="itemImgFile-${status.index}" name="itemImgFile">
+                        <input type="hidden" name="itemImgNum" th:value="${itemImgDto.itemImgNum}">
+                        <label class="custom-file-label" for="itemImgFile-${status.index}" th:text="${not #strings.isEmpty(itemImgDto.originName)} ? ${itemImgDto.originName} : '상품이미지 ' + ${status.index+1}"></label>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <button type="submit" class="btn btn-primary" th:text="${isEdit} ? '상품정보 수정' : '상품등록'"></button>
+        <button type="submit" class="main-input-submit" th:text="${isEdit} ? '상품정보 수정' : '상품등록'"></button>
     </form>
 </section>
 <!-- Footer-->
 <footer class="py-5 bg-dark">
-    <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2023</p></div>
+    <div class="container"><p class="m-0 text-center text-white">Copyright &copy; RentalTech 2024</p></div>
 </footer>
 </body>
 </html>

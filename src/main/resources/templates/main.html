@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
@@ -22,7 +22,9 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container px-4 px-lg-5">
         <a class="navbar-brand" href="/">RentalTech</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span
+                class="navbar-toggler-icon"></span></button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
                 <li class="nav-item"><a class="nav-link active" aria-current="page" href="/">Home</a></li>
@@ -32,7 +34,6 @@
         </div>
     </div>
 </nav>
-<!-- Header-->
 <header class="bg-dark py-5">
     <div class="container px-4 px-lg-5 my-5">
         <div class="text-center text-white">
@@ -43,35 +44,13 @@
 </header>
 <!-- Section-->
 <section class="py-5 main-form-container">
-    <form th:action="${isEdit} ? @{/members/editMember} : @{/members/join}" th:object="${memberDto}" method="post">
-        <div class="form-group">
-            이메일 <input type="text" th:field="*{mail}" class="main-form-control"
-                       th:readonly="${isEdit}" required
-                       placeholder="이메일을 입력하세요">
-        </div>
-        <div class="form-group">
-            비밀번호 <input type="password" th:field="*{pw}" class="main-form-control"
-                          placeholder="비밀번호를 입력하세요">
-        </div>
-        <div class="form-group">
-            비밀번호 확인 <input type="password" th:field="*{check_pw}" class="main-form-control"
-                             placeholder="비밀번호 확인을 입력하세요">
-        </div>
-        <div class="form-group">
-            이름 <input type="text" th:field="*{name}" class="main-form-control"
-                        placeholder="이름을 입력하세요">
-        </div>
-        <div class="form-group">
-            휴대폰 번호 <input type="text" th:field="*{phone}" class="main-form-control"
-                            placeholder="휴대폰 번호를 입력하세요">
-        </div>
-        <div class="form-group">
-            주소 <input type="text" th:field="*{address}" class="main-form-control"
-                        placeholder="주소를 입력하세요">
-        </div>
-        <button type="submit" class="main-input-submit" th:text="${isEdit} ? '회원정보 수정' : '회원가입'"></button>
+    <form action="/members/login" method="post">
+        이메일 <input type="text" name="mail" placeholder="이메일을 입력하세요" class="main-form-control"> <br>
+        비밀번호 <input type="password" name="pw" placeholder="비밀번호를 입력하세요" class="main-form-control"> <br>
+        <input type="submit" value="로그인" class="main-input-submit">
     </form>
 </section>
+
 <!-- Footer-->
 <footer class="py-5 bg-dark">
     <div class="container"><p class="m-0 text-center text-white">Copyright &copy; RentalTech 2024</p></div>
