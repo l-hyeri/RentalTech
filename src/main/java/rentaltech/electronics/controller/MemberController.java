@@ -10,6 +10,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import rentaltech.electronics.constant.Role;
 import rentaltech.electronics.dto.MemberDto;
 import rentaltech.electronics.service.MemberService;
 
@@ -59,6 +60,16 @@ public class MemberController {
         try {
             if (loginResult != null) {
                 session.setAttribute("mail", loginResult.getMail());
+                Role role = loginResult.getRole();
+
+                if (Role.ADMIN.equals(role)) {
+                    return "adminHome";
+                } else if (Role.USER.equals(role)) {
+                    return "userHome";
+                } else {
+                    return "main";
+                }
+
             } else {
                 return "main";
             }
@@ -66,7 +77,6 @@ public class MemberController {
             model.addAttribute("errorMessage", e.getMessage());
             return "main";
         }
-        return "adminHome";
     }
 
     @GetMapping("/members/editMember")
