@@ -3,6 +3,7 @@ package rentaltech.electronics.dto;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
+import rentaltech.electronics.constant.Role;
 import rentaltech.electronics.entity.Member;
 
 @Getter
@@ -27,6 +28,8 @@ public class MemberDto {
     @NotNull(message = "주소 입력은 필수입니다.")
     private String address;
 
+    private Role role;
+
     public static MemberDto toMemberDto(Member member) {
         MemberDto memberDto = new MemberDto();
         memberDto.setMail(member.getMail());
@@ -34,6 +37,7 @@ public class MemberDto {
         memberDto.setName(member.getName());
         memberDto.setPhone(member.getPhone());
         memberDto.setAddress(member.getAddress());
+        memberDto.setRole(member.getRole());
 
         return memberDto;
     }

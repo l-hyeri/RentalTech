@@ -41,7 +41,7 @@ public class Member {
         member.setName(memberDto.getName());
         member.setPhone(memberDto.getPhone());
         member.setAddress(memberDto.getAddress());
-        member.setRole(Role.USER);
+        member.setRole(memberDto.getRole());
 
         return member;
     }
