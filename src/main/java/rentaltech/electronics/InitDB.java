@@ -35,8 +35,11 @@ public class InitDB {
         private final EntityManager em;
 
         public void dbInit1() {
-            Member member = createMember();
-            em.persist(member);
+            Member member1 = createMember();
+            em.persist(member1);
+
+            Member member2 = createUser();
+            em.persist(member2);
 
             Item item1=createItem(111L,"tv1",1000,2,"tv1번 상품",20240526);
             em.persist(item1);
@@ -55,6 +58,18 @@ public class InitDB {
             member.setAddress("관리자 주소");
             member.setMail("manager@gmail.com");
             member.setRole(Role.ADMIN);
+
+            return member;
+        }
+
+        private Member createUser() {
+            Member member = new Member();
+            member.setPw("4567");
+            member.setName("user");
+            member.setPhone("010-1111-1111");
+            member.setAddress("사용자 주소");
+            member.setMail("user@gmail.com");
+            member.setRole(Role.USER);
 
             return member;
         }
