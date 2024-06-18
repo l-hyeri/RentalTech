@@ -91,6 +91,11 @@
   }
 }
 
+.text-danger {
+  color: red;
+  font-weight: bold;
+}
+
 .main-body {
   display: flex;
   justify-content: center;

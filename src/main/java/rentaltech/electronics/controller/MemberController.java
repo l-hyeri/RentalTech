@@ -12,13 +12,18 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import rentaltech.electronics.constant.Role;
 import rentaltech.electronics.dto.MemberDto;
+import rentaltech.electronics.entity.Item;
+import rentaltech.electronics.service.ItemService;
 import rentaltech.electronics.service.MemberService;
+
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
 public class MemberController {
 
     private final MemberService memberService;
+    private final ItemService itemService;
 
     @GetMapping("/members/join")
     public String joinForm(MemberDto memberDto, Model model) {
@@ -65,6 +70,8 @@ public class MemberController {
                 if (Role.ADMIN.equals(role)) {
                     return "adminHome";
                 } else if (Role.USER.equals(role)) {
+                    List<Item> items = itemService.findItemList();
+                    model.addAttribute("items", items);
                     return "userHome";
                 } else {
                     return "main";
