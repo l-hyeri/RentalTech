@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import rentaltech.electronics.dto.ItemDto;
 import rentaltech.electronics.dto.ItemImgDto;
+import rentaltech.electronics.dto.ItemSearchDto;
+import rentaltech.electronics.dto.MainItemDto;
 import rentaltech.electronics.entity.Item;
 import rentaltech.electronics.entity.ItemImg;
 import rentaltech.electronics.repository.ItemImgRepository;
@@ -98,6 +100,10 @@ public class ItemService {
             }
         }
 
+    }
+
+    public List<MainItemDto> findMainItemList(ItemSearchDto itemSearchDto) {  // 전체 상품 조회
+        return itemRepository.getMainItemPage(itemSearchDto);
     }
 
     public void validateDuplicateItem(Item item) {  // 중복된 상품이 있는지 확인

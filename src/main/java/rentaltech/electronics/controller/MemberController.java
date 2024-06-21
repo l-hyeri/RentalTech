@@ -11,8 +11,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import rentaltech.electronics.constant.Role;
+import rentaltech.electronics.dto.ItemSearchDto;
+import rentaltech.electronics.dto.MainItemDto;
 import rentaltech.electronics.dto.MemberDto;
-import rentaltech.electronics.entity.Item;
 import rentaltech.electronics.service.ItemService;
 import rentaltech.electronics.service.MemberService;
 
@@ -59,7 +60,7 @@ public class MemberController {
     }
 
     @PostMapping("/members/login")  // session : 로그인 유지
-    public String login(@ModelAttribute MemberDto memberDto, Model model, HttpSession session) {
+    public String login(@ModelAttribute MemberDto memberDto, ItemSearchDto itemSearchDto,Model model, HttpSession session) {
         MemberDto loginResult = memberService.login(memberDto);
 
         try {
@@ -70,8 +71,9 @@ public class MemberController {
                 if (Role.ADMIN.equals(role)) {
                     return "adminHome";
                 } else if (Role.USER.equals(role)) {
-                    List<Item> items = itemService.findItemList();
+                    List<MainItemDto> items = itemService.findMainItemList(itemSearchDto);
                     model.addAttribute("items", items);
+                    model.addAttribute("itemSearchDto", itemSearchDto);
                     return "userHome";
                 } else {
                     return "main";
