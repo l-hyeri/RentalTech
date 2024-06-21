@@ -78,17 +78,19 @@
                     <!-- Product details-->
                     <div class="card-body p-4">
                         <div class="text-center">
-                            <!-- Product name-->
-                            <h5 class="fw-bolder" th:text="${item.item_name}"></h5>
-                            <!-- Product price-->
-                            <span th:text="${item.price} + '원'"></span>
-                            <!-- Product status-->
-                            <div th:if="${item.stockStatus.name() == 'SOLD_OUT'}">
-                                <span class="text-muted text-decoration-line-through">SELL</span>
-                                <span class="text-danger">SOLD_OUT</span>
-                            </div>
+                            <a  th:href="@{/items/{itemId}(itemId=${item.serialNum})}" class="text-dark">
+                                <!-- Product name-->
+                                <h5 class="fw-bolder" th:text="${item.item_name}"></h5>
+                                <!-- Product price-->
+                                <span th:text="${item.price} + '원'"></span>
+                                <!-- Product status-->
+                                <div th:if="${item.stockStatus.name() == 'SOLD_OUT'}">
+                                    <span class="text-muted text-decoration-line-through">SELL</span>
+                                    <span class="text-danger">SOLD_OUT</span>
+                                </div>
                             <div th:if="${item.stockStatus.name() == 'SELL'}">
                             </div>
+                            </a>
                         </div>
                     </div>
                     <!-- Product actions-->
