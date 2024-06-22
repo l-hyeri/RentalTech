@@ -8,7 +8,7 @@
     <meta name="author" content=""/>
     <title>RentalTech</title>
     <!-- Favicon-->
-    <link rel="icon" type="image/x-icon" href="assets/favicon.ico"/>
+    <link rel="icon" type="image/x-icon" href="/assets/favicon.ico"/>
     <!-- Bootstrap icons-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet"/>
     <!-- Core theme CSS (includes Bootstrap)-->
@@ -67,41 +67,55 @@
 </header>
 <!-- Section-->
 <section class="py-5">
-    <div class="container px-4 px-lg-5 mt-5">
-        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-            <div th:each="item:${items}" class="col mb-5">
-                <div class="card h-100">
-                    <!-- Product image-->
-                    <img class="card-img-top custom-main-image"
-                         th:src="${item.imgUrl}"
-                         th:alt="${item.serialNum}" />
-                    <!-- Product details-->
-                    <div class="card-body p-4">
-                        <div class="text-center">
-                            <a  th:href="@{/items/{itemId}(itemId=${item.serialNum})}" class="text-dark">
-                                <!-- Product name-->
-                                <h5 class="fw-bolder" th:text="${item.item_name}"></h5>
-                                <!-- Product price-->
-                                <span th:text="${item.price} + '원'"></span>
-                                <!-- Product status-->
-                                <div th:if="${item.stockStatus.name() == 'SOLD_OUT'}">
-                                    <span class="text-muted text-decoration-line-through">SELL</span>
-                                    <span class="text-danger">SOLD_OUT</span>
-                                </div>
-                            <div th:if="${item.stockStatus.name() == 'SELL'}">
-                            </div>
-                            </a>
-                        </div>
+    <div class="container px-4 px-lg-5 my-5">
+        <!-- Product image-->
+        <div class="row gx-4 gx-lg-5 align-items-center">
+            <div class="col-md-6">
+            <img class="card-img-top mb-5 mb-md-0 custom-detail-image"
+                 th:src="${item.itemImgDtoList[0].imgUrl}" th:alt="${item.item_name}"/>
+            </div>
+
+            <div class="col-md-6">
+                <div class="small mb-1">Category</div>
+                <h1 class="display-5 fw-bolder" th:text="${item.item_name}"></h1>
+                <div class="fs-5 mb-5">
+                    <div>
+                        <span class="h4" th:text="${item.price}"></span>원
                     </div>
-                    <!-- Product actions-->
-                    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                        <div class="text-center">
-                            <a class="btn btn-outline-dark mt-auto" href="#">Add to cart</a>
+                    <div>
+                        렌탈기간 <span th:text="${item.period}"></span>개월
+                    </div>
+                </div>
+                <div th:if="${item.stockStatus.name() == 'SOLD_OUT'}">
+                    <span class="text-decoration-line-through">SELL</span>
+                    <span class="text-danger">SOLD_OUT</span>
+                </div>
+                <div th:if="${item.stockStatus.name() == 'SELL'}"></div>
+
+                <div class="d-flex align-items-start">
+                    <div class="d-flex flex-column w-50 me-3">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">수량</span>
+                            </div>
+                            <input type="number" name="count" id="count" class="form-control" value="1" min="1"
+                                   th:max="${item.stock}">
+                        </div>
+                        <div class="d-flex justify-content-end mt-2">
+                            <button class="btn btn-outline-dark flex-shrink-0 me-2" type="button">
+                                <i class="bi-cart-fill me-1"></i>
+                                장바구니
+                            </button>
+                            <button class="btn btn-outline-dark flex-shrink-0" type="button">
+                                렌탈신청
+                            </button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        <h5>제품 상세 설명</h5>
+        <p class="lead" th:text="${item.details}"></p>
     </div>
 </section>
 <!-- Footer-->

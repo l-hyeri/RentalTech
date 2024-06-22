@@ -91,6 +91,18 @@
   }
 }
 
+.custom-detail-image {
+  width: 600px;
+  height: 700px;
+  object-fit: contain;
+}
+
+.custom-main-image {
+  width: 450px;
+  height: 300px;
+  object-fit: contain;
+}
+
 a.text-dark {
   text-decoration: none;
 }

@@ -94,4 +94,12 @@ public class ItemController {
             return "items/itemList";
         }
     }
+
+    // 상품 상세 페이지
+    @GetMapping("/items/{itemId}")
+    public String itemDetail(Model model, @PathVariable("itemId") Long serialNum) {
+        ItemDto itemDto = itemService.findItemDetails(serialNum);
+        model.addAttribute("item", itemDto);
+        return "items/itemDetail";
+    }
 }

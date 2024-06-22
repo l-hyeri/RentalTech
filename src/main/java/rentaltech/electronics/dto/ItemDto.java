@@ -37,6 +37,7 @@ public class ItemDto {
         itemDto.setItem_name(item.getItem_name());
         itemDto.setPrice(item.getPrice());
         itemDto.setStock(item.getStock());
+        itemDto.setStockStatus(item.getStockStatus());
         itemDto.setDetails(item.getDetails());
         itemDto.setPeriod(item.getPeriod());
 
