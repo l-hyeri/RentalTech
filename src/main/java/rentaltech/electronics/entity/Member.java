@@ -18,7 +18,7 @@ public class Member {
     @Id
     @Column(name = "member_id")
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long member_id;   // 아이디
+    private Long id;   // 아이디
 
     private String pw;    // 비밀번호
 
