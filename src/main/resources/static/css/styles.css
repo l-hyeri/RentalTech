@@ -98,6 +98,25 @@
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
+.repImg{
+  height:100px;
+  width:100px;
+}
+
+.content-mg{
+  margin-left:25%;
+  margin-right:25%;
+  margin-top:2%;
+  margin-bottom:100px;
+}
+
+.fs18{
+  font-size:18px
+}
+.fs24{
+  font-size:24px
+}
+
 .custom-detail-image {
   width: 600px;
   height: 700px;

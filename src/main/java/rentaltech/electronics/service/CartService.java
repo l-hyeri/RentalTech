@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import rentaltech.electronics.dto.CartItemDto;
+import rentaltech.electronics.dto.CartListDto;
 import rentaltech.electronics.entity.Cart;
 import rentaltech.electronics.entity.CartItem;
 import rentaltech.electronics.entity.Item;
@@ -15,6 +16,8 @@ import rentaltech.electronics.repository.CartRepository;
 import rentaltech.electronics.repository.ItemRepository;
 import rentaltech.electronics.repository.MemberRepository;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -54,6 +57,28 @@ public class CartService {
             return cartItem.getId();
 
         } else {    // 회원 정보가 없는 경우 처리
+            return null;
+        }
+    }
+
+    // 장바구니 목록 조회
+    public List<CartListDto> cartList(String email) {
+
+        List<CartListDto> cartList = new ArrayList<>();
+
+        Optional<Member> optionalMember = memberRepository.findByMail(email);
+
+        if (optionalMember.isPresent()) {
+            Member member = optionalMember.get();
+            Cart cart = cartRepository.findByMemberId(member.getId());
+
+            if (cart == null) {
+                return cartList;
+            }
+            cartList = cartItemRepository.findCartListDto(cart.getId());
+
+            return cartList;
+        } else {
             return null;
         }
     }
