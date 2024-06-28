@@ -7,12 +7,15 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import rentaltech.electronics.dto.CartItemDto;
+import rentaltech.electronics.dto.CartListDto;
 import rentaltech.electronics.service.CartService;
 
 import java.util.List;
@@ -48,5 +51,15 @@ public class CartController {
             return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<Long>(cartItemId, HttpStatus.OK);
+    }
+
+    // 장바구니 목록 조회
+    @GetMapping(value = "/carts")
+    public String cartList(HttpSession session, Model model) {
+        String mail = (String) session.getAttribute("mail");
+
+        List<CartListDto> cartList = cartService.cartList(mail);
+        model.addAttribute("cartList", cartList);
+        return "carts/cartList";
     }
 }
