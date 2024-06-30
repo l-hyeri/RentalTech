@@ -1,5 +1,19 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="">
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script th:inline="javascript">
+
+    // 전체 선택, 전체 해제
+    function checkAll() {
+        if ($("#checkall").prop("checked")) {
+            $("input[name=cartChkBox]").prop("checked", true);
+        } else {
+            $("input[name=cartChkBox]").prop("checked", false);
+        }
+    }
+</script>
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
