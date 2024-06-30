@@ -27,6 +27,33 @@
         $("#orderTotalPrice").html(orderTotalPrice + '원');
     }
 
+    // 장바구니 상품 수량 변경
+    function changeCount(obj) {
+        var count = obj.value;
+        var cartItemId = obj.id.split('_')[1];
+        var price = $("#price_" + cartItemId).data("price");
+        var totalPrice = count * price;
+        $("#totalPrice_" + cartItemId).html(totalPrice + "원");
+        getOrderTotalPrice();
+        updateCartItemCount(cartItemId, count);
+    }
+
+    // 상품 수량 변경 DB 적용을 위해 "/carts/{cartItemId}?count=value" 요청
+    function updateCartItemCount(cartItemId, count){
+        var url = "/carts/" + cartItemId+"?count=" + count;
+
+        $.ajax({
+            url      : url,
+            type     : "PUT",
+            dataType : "json",
+            cache   : false
+        }).done(function(result){
+            console.log("cartItem update success");
+        }).fail(function(jqXHR, status, error){
+            console.log("cartItem update fail");
+        });
+    }
+
 </script>
 
 <head>

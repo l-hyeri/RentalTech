@@ -10,10 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import rentaltech.electronics.dto.CartItemDto;
 import rentaltech.electronics.dto.CartListDto;
 import rentaltech.electronics.service.CartService;
@@ -61,5 +58,16 @@ public class CartController {
         List<CartListDto> cartList = cartService.cartList(mail);
         model.addAttribute("cartList", cartList);
         return "carts/cartList";
+    }
+
+    // 장바구니 상품 수량 변경
+    @PutMapping(value = "/carts/{cartItemId}")
+    @ResponseBody
+    public ResponseEntity updateCartItem(@PathVariable(name = "cartItemId") Long cartItemId, int count, HttpSession session) {
+        if (count <= 0) {
+            return new ResponseEntity<String>("최소 1개 이상 담아주세요.", HttpStatus.BAD_REQUEST);
+        }
+        cartService.updateCartItem(cartItemId, count);
+        return new ResponseEntity<Long>(cartItemId, HttpStatus.OK);
     }
 }
