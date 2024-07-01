@@ -70,4 +70,12 @@ public class CartController {
         cartService.updateCartItem(cartItemId, count);
         return new ResponseEntity<Long>(cartItemId, HttpStatus.OK);
     }
+
+    // 장바구니 삭제
+    @DeleteMapping(value="/carts/{cartItemId}")
+    @ResponseBody
+    public ResponseEntity deleteCartItem(@PathVariable(name = "cartItemId") Long cartItemId) {
+        cartService.deleteCartItem(cartItemId);
+        return new ResponseEntity<Long>(cartItemId, HttpStatus.OK);
+    }
 }

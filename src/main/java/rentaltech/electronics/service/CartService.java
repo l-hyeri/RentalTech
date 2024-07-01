@@ -86,7 +86,12 @@ public class CartService {
     // 장바구니 상품 수량 변경
     public void updateCartItem(Long cartItemId, int count) {
         CartItem cartItem = cartItemRepository.findById(cartItemId).orElseThrow(EntityNotFoundException::new);
-        log.info(cartItem.toString());
         cartItem.updateCount(count);
+    }
+
+    //  장바구니 상품 삭제
+    public void deleteCartItem(Long cartItemId) {
+        CartItem cartItem = cartItemRepository.findById(cartItemId).orElseThrow(EntityNotFoundException::new);
+        cartItemRepository.delete(cartItem);
     }
 }

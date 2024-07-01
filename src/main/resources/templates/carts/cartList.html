@@ -39,18 +39,35 @@
     }
 
     // 상품 수량 변경 DB 적용을 위해 "/carts/{cartItemId}?count=value" 요청
-    function updateCartItemCount(cartItemId, count){
-        var url = "/carts/" + cartItemId+"?count=" + count;
+    function updateCartItemCount(cartItemId, count) {
+        var url = "/carts/" + cartItemId + "?count=" + count;
 
         $.ajax({
-            url      : url,
-            type     : "PUT",
-            dataType : "json",
-            cache   : false
-        }).done(function(result){
+            url: url,
+            type: "PUT",
+            dataType: "json",
+            cache: false
+        }).done(function (result) {
             console.log("cartItem update success");
-        }).fail(function(jqXHR, status, error){
+        }).fail(function (jqXHR, status, error) {
             console.log("cartItem update fail");
+        });
+    }
+
+    // 장바구니 삭제
+    function deleteCartItem(obj) {
+        var cartItemId = obj.dataset.id;
+        var url = "/carts/" + cartItemId;
+
+        $.ajax({
+            url: url,
+            type: "DELETE",
+            dataType: "json",
+            cache: false
+        }).done(function (result) {
+            location.href = '/carts';
+        }).fail(function (jqXHR, status, error) {
+            alert(jqXHR, responseJSON.message);
         });
     }
 
