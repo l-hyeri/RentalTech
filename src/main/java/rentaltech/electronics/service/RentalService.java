@@ -3,6 +3,7 @@ package rentaltech.electronics.service;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import rentaltech.electronics.dto.RentalDto;
 import rentaltech.electronics.entity.Item;
@@ -20,6 +21,7 @@ import java.util.Optional;
 @Service
 @Transactional
 @RequiredArgsConstructor
+@Slf4j
 public class RentalService {
 
     private final ItemRepository itemRepository;
@@ -29,15 +31,15 @@ public class RentalService {
     // 상품 상세 조회에서 바로 렌탈
     public Long rental(RentalDto rentalDto, String email) {
 
-        // RentalItem(List) 객체 생성
-        List<RentalItem> rentalItemList = new ArrayList<>();
-        Item item = itemRepository.findById(rentalDto.getItemId()).orElseThrow(EntityNotFoundException::new);
-        rentalItemList.add(RentalItem.createRentalItem(item, rentalDto.getCount()));
-
         // Rental 객체 생성
-        Optional<Member> optionalMember= memberRepository.findByMail(email);
+        Optional<Member> optionalMember = memberRepository.findByMail(email);
 
         if (optionalMember.isPresent()) {
+            // RentalItem(List) 객체 생성
+            List<RentalItem> rentalItemList = new ArrayList<>();
+            Item item = itemRepository.findBySerialNum(rentalDto.getSerialNum()).orElseThrow(EntityNotFoundException::new);
+            rentalItemList.add(RentalItem.createRentalItem(item, rentalDto.getCount()));
+
             Member member = optionalMember.get();
             Rental rental = Rental.createRental(member, rentalItemList);
 

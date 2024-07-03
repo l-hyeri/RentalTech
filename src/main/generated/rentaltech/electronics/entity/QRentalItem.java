@@ -28,9 +28,9 @@ public class QRentalItem extends EntityPathBase<RentalItem> {
 
     public final QItem item;
 
-    public final QRental rental;
-
     public final NumberPath<Integer> rentalPrice = createNumber("rentalPrice", Integer.class);
+
+    public final QRental rentals;
 
     public QRentalItem(String variable) {
         this(RentalItem.class, forVariable(variable), INITS);
@@ -51,7 +51,7 @@ public class QRentalItem extends EntityPathBase<RentalItem> {
     public QRentalItem(Class<? extends RentalItem> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
         this.item = inits.isInitialized("item") ? new QItem(forProperty("item")) : null;
-        this.rental = inits.isInitialized("rental") ? new QRental(forProperty("rental"), inits.get("rental")) : null;
+        this.rentals = inits.isInitialized("rentals") ? new QRental(forProperty("rentals"), inits.get("rentals")) : null;
     }
 
 }

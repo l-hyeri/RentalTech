@@ -26,12 +26,12 @@ public class Rental {
     private RentalStatus rentalStatus;    // 주문 상태
 
     // rental_item 테이블의 rental 필드에 매핑
-    @OneToMany(mappedBy = "rental", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "rentals", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<RentalItem> rentalItemList = new ArrayList<>();
 
     public void addRentalItem(RentalItem rentalItem) {
         rentalItemList.add(rentalItem);
-        rentalItem.setRental(this);
+        rentalItem.setRentals(this);
     }
 
     public static Rental createRental(Member member, List<RentalItem> rentalItemList) {
