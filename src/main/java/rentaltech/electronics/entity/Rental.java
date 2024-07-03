@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 import rentaltech.electronics.constant.RentalStatus;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,6 +22,8 @@ public class Rental {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
+
+    private LocalDateTime rentalDate;   // 렌탈 신청 날짜
 
     @Enumerated(EnumType.STRING)
     private RentalStatus rentalStatus;    // 주문 상태
@@ -41,6 +44,7 @@ public class Rental {
         for (RentalItem rentalItem : rentalItemList) {
             rental.addRentalItem(rentalItem);
         }
+        rental.setRentalDate(LocalDateTime.now());
         rental.setRentalStatus(RentalStatus.RENTAL);
         return rental;
     }
