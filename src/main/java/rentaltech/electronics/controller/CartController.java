@@ -88,7 +88,7 @@ public class CartController {
         List<CartRentalDto> cartRentalDtoList = cartRentalDto.getCartRentalDtoList();
 
         if (cartRentalDtoList == null || cartRentalDtoList.size() == 0) {
-            return new ResponseEntity<String>("주문할 상품을 선택해주세요.", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<String>("렌탈할 상품을 선택해주세요.", HttpStatus.BAD_REQUEST);
         }
 
         Long rentalId = cartService.rentalCartItem(cartRentalDtoList, mail);
