@@ -71,6 +71,37 @@
         });
     }
 
+    // 상품 렌탈 신청
+    function rental() {
+        var url = "/carts/rental";
+        var dataList = new Array();
+        var paramData = new Object();
+
+        $("input[name=cartChkBox]:checked").each(function() {
+            var cartItemId = $(this).val();
+            var data = new Object();
+            data["cartItemId"] = cartItemId;
+            dataList.push(data);
+        });
+
+        paramData['cartRentalDtoList'] = dataList;
+
+        var param = JSON.stringify(paramData);
+
+        $.ajax({
+            url: url,
+            type: "POST",
+            contentType: "application/json",
+            data: param,
+            dataType: "json",
+            cache: false
+        }).done(function (result) {
+            alert('렌탈신청이 완료 되었습니다.');
+        }).fail(function (jqXHR, status, error) {
+            alert('렌탈신청이 불가능합니다.');
+        });
+    }
+
 </script>
 
 <head>
@@ -194,7 +225,10 @@
         </h4>
 
         <div class="text-center mt-3">
-            <button type="button" class="btn btn-primary btn-lg" onclick="orders()">주문하기</button>
+            <button class="btn btn-outline-dark flex-shrink-0" type="button"
+                    onclick="rental()">
+                렌탈신청
+            </button>
         </div>
 
     </div>

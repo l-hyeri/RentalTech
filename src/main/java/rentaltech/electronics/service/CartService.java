@@ -7,6 +7,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import rentaltech.electronics.dto.CartItemDto;
 import rentaltech.electronics.dto.CartListDto;
+import rentaltech.electronics.dto.CartRentalDto;
+import rentaltech.electronics.dto.RentalDto;
 import rentaltech.electronics.entity.Cart;
 import rentaltech.electronics.entity.CartItem;
 import rentaltech.electronics.entity.Item;
@@ -30,6 +32,7 @@ public class CartService {
     private final CartItemRepository cartItemRepository;
     private final MemberRepository memberRepository;
     private final ItemRepository itemRepository;
+    private final RentalService rentalService;
 
     // 장바구니 담기
     public Long addCart(CartItemDto cartItemDto, String email) {
@@ -93,5 +96,28 @@ public class CartService {
     public void deleteCartItem(Long cartItemId) {
         CartItem cartItem = cartItemRepository.findById(cartItemId).orElseThrow(EntityNotFoundException::new);
         cartItemRepository.delete(cartItem);
+    }
+
+    // 장바구니 상품 렌탈
+    public Long rentalCartItem(List<CartRentalDto> cartRentalDtoList, String email) {
+        List<RentalDto> rentalDtoList = new ArrayList<>();
+
+        for (CartRentalDto cartRentalDto : cartRentalDtoList) {
+            CartItem cartItem = cartItemRepository.findById(cartRentalDto.getCartItemId()).orElseThrow(EntityNotFoundException::new);
+            RentalDto rentalDto = new RentalDto();
+            rentalDto.setSerialNum(cartItem.getItem().getSerialNum());
+            rentalDto.setCount(cartItem.getCount());
+            rentalDtoList.add(rentalDto);
+        }
+
+        Long rentalId = rentalService.rentals(rentalDtoList, email);
+
+        // 주문한 상품은 장바구니에서 삭제
+        for (CartRentalDto cartRentalDto : cartRentalDtoList) {
+            CartItem cartItem = cartItemRepository.findById(cartRentalDto.getCartItemId()).orElseThrow(EntityNotFoundException::new);
+            cartItemRepository.delete(cartItem);
+        }
+
+        return rentalId;
     }
 }

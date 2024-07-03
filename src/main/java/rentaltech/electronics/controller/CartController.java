@@ -13,6 +13,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import rentaltech.electronics.dto.CartItemDto;
 import rentaltech.electronics.dto.CartListDto;
+import rentaltech.electronics.dto.CartRentalDto;
 import rentaltech.electronics.service.CartService;
 
 import java.util.List;
@@ -72,10 +73,25 @@ public class CartController {
     }
 
     // 장바구니 삭제
-    @DeleteMapping(value="/carts/{cartItemId}")
+    @DeleteMapping(value = "/carts/{cartItemId}")
     @ResponseBody
     public ResponseEntity deleteCartItem(@PathVariable(name = "cartItemId") Long cartItemId) {
         cartService.deleteCartItem(cartItemId);
         return new ResponseEntity<Long>(cartItemId, HttpStatus.OK);
+    }
+
+    // 장바구니 상품 렌탈
+    @PostMapping(value = "/carts/rental")
+    @ResponseBody
+    public ResponseEntity rental(@RequestBody CartRentalDto cartRentalDto, HttpSession session) {
+        String mail = (String) session.getAttribute("mail");
+        List<CartRentalDto> cartRentalDtoList = cartRentalDto.getCartRentalDtoList();
+
+        if (cartRentalDtoList == null || cartRentalDtoList.size() == 0) {
+            return new ResponseEntity<String>("주문할 상품을 선택해주세요.", HttpStatus.BAD_REQUEST);
+        }
+
+        Long rentalId = cartService.rentalCartItem(cartRentalDtoList, mail);
+        return new ResponseEntity<Long>(rentalId, HttpStatus.OK);
     }
 }

@@ -50,4 +50,30 @@ public class RentalService {
             return null;
         }
     }
+
+    // 장바구니에서 렌탈
+    public Long rentals(List<RentalDto> rentalDtoList, String email) {
+
+        // 로그인한 사용자 조회
+        Optional<Member> optionalMember = memberRepository.findByMail(email);
+
+        if (optionalMember.isPresent()) {
+            Member member = optionalMember.get();
+
+            // rentalDto 객체를 이용하여 item 객체와 count 값을 얻어낸 뒤, 이를 이용하여 RentalItem 객체(들) 생성
+            List<RentalItem> rentalItemList = new ArrayList<>();
+            for (RentalDto rentalDto : rentalDtoList) {
+                Item item = itemRepository.findBySerialNum(rentalDto.getSerialNum()).orElseThrow(EntityNotFoundException::new);
+                RentalItem rentalItem = RentalItem.createRentalItem(item, rentalDto.getCount());
+                rentalItemList.add(rentalItem);
+            }
+
+            // Rental Entity 클래스에 존재하는 createRental 메소드로 Rental 생성 및 저장
+            Rental rental = Rental.createRental(member, rentalItemList);
+            rentalRepository.save(rental);
+            return rental.getId();
+        } else {
+            return null;
+        }
+    }
 }
