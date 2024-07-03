@@ -15,14 +15,38 @@
             type: "POST",
             contentType: "application/json",
             data: param,
-            dataType:"json",
-            cache:false
+            dataType: "json",
+            cache: false
         }).done(function (result) {
             alert('상품을 장바구니에 담았습니다.');
         }).fail(function (jqXHR, status, error) {
             alert('장바구니 담기에 실패했습니다.');
         });
     }
+
+    function rental() {
+        var url = "/rental";
+        var paramData = {
+            serialNum: $("#serialNum").val(),
+            count: $("#count").val()
+        }
+
+        var param = JSON.stringify(paramData);
+
+        $.ajax({
+            url: url,
+            type: "POST",
+            contentType: "application/json",
+            data: param,
+            dataType: "json",
+            cache: false
+        }).done(function (result) {
+            alert('주문이 완료 되었습니다.');
+        }).fail(function (jqXHR, status, error) {
+            alert('주문이 불가능합니다.');
+        });
+    }
+
 </script>
 
 <head>
@@ -132,7 +156,8 @@
                         <i class="bi-cart-fill me-1"></i>
                         장바구니
                     </button>
-                    <button class="btn btn-outline-dark flex-shrink-0" type="button">
+                    <button class="btn btn-outline-dark flex-shrink-0" type="button"
+                            onclick="rental()">
                         렌탈신청
                     </button>
                 </div>
