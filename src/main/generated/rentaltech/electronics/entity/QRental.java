@@ -26,6 +26,8 @@ public class QRental extends EntityPathBase<Rental> {
 
     public final QMember member;
 
+    public final DateTimePath<java.time.LocalDateTime> rentalDate = createDateTime("rentalDate", java.time.LocalDateTime.class);
+
     public final ListPath<RentalItem, QRentalItem> rentalItemList = this.<RentalItem, QRentalItem>createList("rentalItemList", RentalItem.class, QRentalItem.class, PathInits.DIRECT2);
 
     public final EnumPath<rentaltech.electronics.constant.RentalStatus> rentalStatus = createEnum("rentalStatus", rentaltech.electronics.constant.RentalStatus.class);
