@@ -6,13 +6,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import rentaltech.electronics.dto.RentalDto;
-import rentaltech.electronics.entity.Item;
-import rentaltech.electronics.entity.Member;
-import rentaltech.electronics.entity.Rental;
-import rentaltech.electronics.entity.RentalItem;
-import rentaltech.electronics.repository.ItemRepository;
-import rentaltech.electronics.repository.MemberRepository;
-import rentaltech.electronics.repository.RentalRepository;
+import rentaltech.electronics.dto.RentalItemDto;
+import rentaltech.electronics.dto.RentalListDto;
+import rentaltech.electronics.entity.*;
+import rentaltech.electronics.repository.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +24,7 @@ public class RentalService {
     private final ItemRepository itemRepository;
     private final MemberRepository memberRepository;
     private final RentalRepository rentalRepository;
+    private final ItemImgRepository itemImgRepository;
 
     // 상품 상세 조회에서 바로 렌탈
     public Long rental(RentalDto rentalDto, String email) {
@@ -75,5 +73,25 @@ public class RentalService {
         } else {
             return null;
         }
+    }
+
+    // 렌탈 목록 조회
+    public List<RentalListDto> rentalList(String email) {
+
+        List<Rental> rentals = rentalRepository.findRentals(email);
+        List<RentalListDto> rentalListDtos = new ArrayList<>();
+
+        for (Rental rental : rentals) {
+            RentalListDto rentalListDto = new RentalListDto(rental);
+            List<RentalItem> rentalItems = rental.getRentalItemList();
+
+            for (RentalItem rentalItem : rentalItems) {
+                ItemImg itemImg = itemImgRepository.findByItemSerialNumAndRepreImg(rentalItem.getItem().getSerialNum(), "Y");
+                RentalItemDto rentalItemDto = new RentalItemDto(rentalItem, itemImg.getImgUrl());
+                rentalListDto.addRentalItemDto(rentalItemDto);
+            }
+            rentalListDtos.add(rentalListDto);
+        }
+        return rentalListDtos;
     }
 }
