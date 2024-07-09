@@ -5,6 +5,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.thymeleaf.util.StringUtils;
 import rentaltech.electronics.dto.RentalDto;
 import rentaltech.electronics.dto.RentalItemDto;
 import rentaltech.electronics.dto.RentalListDto;
@@ -93,5 +94,22 @@ public class RentalService {
             rentalListDtos.add(rentalListDto);
         }
         return rentalListDtos;
+    }
+
+    // 렌탈을 요청한 사용자가 맞는지 검증
+    public boolean validateRental(Long rentalId, String email) {
+
+        Rental rental = rentalRepository.findById(rentalId).orElseThrow(EntityNotFoundException::new);
+
+        if (StringUtils.equals(rental.getMember().getMail(), email)) {
+            return true;
+        }
+        return false;
+    }
+
+    // 렌탈 취소
+    public void rentalCancel(Long rentalId) {
+        Rental rental = rentalRepository.findById(rentalId).orElseThrow(EntityNotFoundException::new);
+        rental.rentalCancel();
     }
 }
