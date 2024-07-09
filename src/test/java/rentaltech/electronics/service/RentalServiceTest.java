@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import rentaltech.electronics.constant.ItemStockStatus;
+import rentaltech.electronics.constant.RentalStatus;
 import rentaltech.electronics.dto.RentalDto;
 import rentaltech.electronics.entity.Item;
 import rentaltech.electronics.entity.Member;
@@ -60,7 +61,7 @@ public class RentalServiceTest {
     @Test
     @DisplayName("렌탈 테스트")
     public void rental() {
-        
+
         Item item = saveItem();
         Member member = saveMember();
 
@@ -83,5 +84,27 @@ public class RentalServiceTest {
 
         // 3. 1의 가격과 2의 가격이 같은지 테스트
         assertEquals(totalPrice, rental.getTotalPrice());
+    }
+
+    @Test
+    @DisplayName("렌탈 취소 테스트")
+    public void cancelRental() {
+        Item item = saveItem();
+        Member member = saveMember();
+
+        RentalDto rentalDto = new RentalDto();
+        rentalDto.setCount(10);
+        rentalDto.setSerialNum(item.getSerialNum());
+
+        // 렌탈 객체 저장
+        Long rentalId = rentalService.rental(rentalDto, member.getMail());
+
+        // 렌탈된 객체를 조회한 뒤에 렌탈 취소
+        Rental rental = rentalRepository.findById(rentalId).orElseThrow(EntityNotFoundException::new);
+        rentalService.rentalCancel(rentalId);
+
+        // 렌탈의 상태가 "CANCEL"이고 처음 수량 100이 맞다면 테스트 통과
+        assertEquals(RentalStatus.CANCEL, rental.getRentalStatus());
+        assertEquals(100, item.getStock());
     }
 }
