@@ -8,4 +8,6 @@ import java.util.List;
 public interface ItemImgRepository extends JpaRepository<ItemImg, Long> {
 
     List<ItemImg> findByItemSerialNum(Long serialNum);
+
+    ItemImg findByItemSerialNumAndRepreImg(Long serialNum, String repreYn);
 }
