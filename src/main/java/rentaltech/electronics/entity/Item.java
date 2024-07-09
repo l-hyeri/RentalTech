@@ -53,6 +53,7 @@ public class Item { // 카테고리(categories-List)
         this.stock = remainStock;
     }
 
+    // 렌탈 취소시 상품 개수 추가
     public void addStock(int stock) {
         this.stock += stock;
     }

@@ -57,4 +57,12 @@ public class Rental {
         }
         return totalPrice;
     }
+
+    // 렌탈 취소
+    public void rentalCancel() {
+        this.rentalStatus = RentalStatus.CANCEL;
+        for (RentalItem rentalItem : rentalItemList) {
+            rentalItem.cancel();
+        }
+    }
 }

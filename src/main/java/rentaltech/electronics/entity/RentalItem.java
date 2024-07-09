@@ -39,4 +39,8 @@ public class RentalItem {
     public int getTotalPrice() {
         return this.rentalPrice * this.count;
     }
+
+    public void cancel() {
+        this.getItem().addStock(count);
+    }
 }
