@@ -7,12 +7,15 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import rentaltech.electronics.dto.RentalDto;
+import rentaltech.electronics.dto.RentalListDto;
 import rentaltech.electronics.service.RentalService;
 
 import java.util.List;
@@ -45,10 +48,20 @@ public class RentalController {
 
         try {
             rentalId = rentalService.rental(rentalDto, mail);
-            log.info(String.valueOf(rentalId));
         } catch (Exception e) {
             return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<Long>(rentalId, HttpStatus.OK);
+    }
+
+    // 렌탈신청 목록 조회
+    @GetMapping(value = "/rentals")
+    public String rentalList(HttpSession session, Model model) {
+        String mail = (String) session.getAttribute("mail");
+
+        List<RentalListDto> rentalList=rentalService.rentalList(mail);
+        model.addAttribute("rentalList", rentalList);
+
+        return "rentals/rentalList";
     }
 }
