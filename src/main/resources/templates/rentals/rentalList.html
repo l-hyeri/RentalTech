@@ -1,5 +1,32 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="">
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script th:inline="javascript">
+    function cancelRental(rentalId) {
+        var url = "/rentals/" + rentalId + "/cancel";
+        var paramData = {
+            rentalId: rentalId,
+        };
+
+        var param = JSON.stringify(paramData);
+
+        $.ajax({
+            url: url,
+            type: "POST",
+            contentType: "application/json",
+            data: param,
+            dataType: "json",
+            casche: false,
+
+        }).done(function (result) {
+            alert("렌탈이 취소 되었습니다.");
+        }).fail(function (jqXHR, status, error) {
+            alert('로그인 후 이용해주세요.');
+        });
+    }
+</script>
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
@@ -69,7 +96,7 @@
             <div class="ml-3">
                 <th:block th:if="${rental.rentalStatus == T(rentaltech.electronics.constant.RentalStatus).RENTAL}">
                     <button type="button" class="btn btn-outline-secondary"
-                            th:value="${rental.rentalItemId}" onclick="cancelOrder(this.value)">렌탈취소
+                            th:value="${rental.rentalItemId}" onclick="cancelRental(this.value)">렌탈취소
                     </button>
                 </th:block>
                 <th:block th:unless="${rental.rentalStatus == T(rentaltech.electronics.constant.RentalStatus).RENTAL}">

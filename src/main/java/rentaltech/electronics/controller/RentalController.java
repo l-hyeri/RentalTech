@@ -10,10 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import rentaltech.electronics.dto.RentalDto;
 import rentaltech.electronics.dto.RentalListDto;
 import rentaltech.electronics.service.RentalService;
@@ -59,9 +56,23 @@ public class RentalController {
     public String rentalList(HttpSession session, Model model) {
         String mail = (String) session.getAttribute("mail");
 
-        List<RentalListDto> rentalList=rentalService.rentalList(mail);
+        List<RentalListDto> rentalList = rentalService.rentalList(mail);
         model.addAttribute("rentalList", rentalList);
 
         return "rentals/rentalList";
+    }
+
+    // 렌탈 취소
+    @PostMapping("/rentals/{rentalId}/cancel")
+    @ResponseBody
+    public ResponseEntity cancelRental(@PathVariable("rentalId") Long rentalId, HttpSession session) {
+        String mail = (String) session.getAttribute("mail");
+
+        if (!rentalService.validateRental(rentalId, mail)) {
+            return new ResponseEntity<String>("렌탈 취소 권한이 없습니다.", HttpStatus.FORBIDDEN);
+        }
+
+        rentalService.rentalCancel(rentalId);
+        return new ResponseEntity<Long>(rentalId, HttpStatus.OK);
     }
 }
