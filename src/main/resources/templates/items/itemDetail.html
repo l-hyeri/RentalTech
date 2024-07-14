@@ -177,6 +177,14 @@
             <img th:if="${not #strings.isEmpty(itemImg.imgUrl)}" th:src="${itemImg.imgUrl}" class="rounded img-fluid"
                  style="max-width: 800px;">
         </div>
+        <hr>
+
+        <div class="d-flex justify-content-between align-items-center">
+            <h4 class="fw-bold mb-0">상품 문의</h4>
+            <a href="/questions/questionForm" class="btn btn-outline-dark flex-shrink-0" type="button">
+                문의작성
+            </a>
+        </div>
     </div>
 </section>
 <!-- Footer-->
