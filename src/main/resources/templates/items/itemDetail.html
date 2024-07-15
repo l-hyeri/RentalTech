@@ -47,6 +47,12 @@
         });
     }
 
+    function goToQuestionForm() {
+        const serialNum = document.getElementById('serialNum').value;
+
+        window.location.href = `/questions/questionForm?serialNum=${serialNum}`;
+    }
+
 </script>
 
 <head>
@@ -181,7 +187,8 @@
 
         <div class="d-flex justify-content-between align-items-center">
             <h4 class="fw-bold mb-0">상품 문의</h4>
-            <a href="/questions/questionForm" class="btn btn-outline-dark flex-shrink-0" type="button">
+            <a href="#" class="btn btn-outline-dark flex-shrink-0" type="button"
+               onclick="goToQuestionForm()">
                 문의작성
             </a>
         </div>
