@@ -91,6 +91,10 @@
   }
 }
 
+.content-editor {
+  min-height: 300px;
+}
+
 .product-details {
   background-color: #fff;
   border-radius: 10px;
