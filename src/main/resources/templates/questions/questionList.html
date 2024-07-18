@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:fragment="questionList">
+    <table class="table">
+        <thead>
+        <tr>
+            <th>번호</th>
+            <th>제목</th>
+            <th>작성일</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="question, stat : ${questionList}">
+            <td th:text="${questionList.size() - stat.index}"></td>
+            <td>
+                <a th:text="${question.getTitle()}"></a>
+            </td>
+            <td th:text="${question.getQuestionDate()}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

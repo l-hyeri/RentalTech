@@ -53,6 +53,15 @@
         window.location.href = `/questions/questionForm?serialNum=${serialNum}`;
     }
 
+    document.addEventListener('DOMContentLoaded', function() {
+        const itemId = document.getElementById('serialNum').value;
+        fetch(`/items/${itemId}/questions`)
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('questionList').innerHTML = html;
+            });
+    });
+
 </script>
 
 <head>
@@ -191,6 +200,9 @@
                onclick="goToQuestionForm()">
                 문의작성
             </a>
+        </div>
+        <div id="questionList">
+
         </div>
     </div>
 </section>

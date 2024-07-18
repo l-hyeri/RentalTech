@@ -7,9 +7,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import rentaltech.electronics.dto.QuestionDto;
+import rentaltech.electronics.dto.QuestionListDto;
 import rentaltech.electronics.service.QuestionService;
+
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -18,7 +22,7 @@ public class QuestionController {
     private final QuestionService questionService;
 
     @GetMapping("/questions/questionForm")
-    public String registerQuestion(QuestionDto questionDto, Model model) {
+    public String registerQuestion(QuestionDto questionDto, Model model) {  // 문의 사항 작성
         model.addAttribute("questionForm", questionDto);
         return "questions/questionForm";
     }
@@ -33,10 +37,18 @@ public class QuestionController {
         try {
             String mail = (String) session.getAttribute("mail");
             questionService.createQuestion(questionDto, mail);
-            
+
         } catch (Exception e) {
             model.addAttribute("errorMessage", e.getMessage());
         }
         return "redirect:/items/" + questionDto.getSerialNum();
+    }
+
+    @GetMapping("/items/{itemId}/questions")
+    public String questionList(@PathVariable("itemId") Long serialNum, Model model) {
+        List<QuestionListDto> questionDtos = questionService.questionList(serialNum);
+        model.addAttribute("questionList", questionDtos);
+
+        return "questions/questionList";
     }
 }
