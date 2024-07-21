@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="">
 <body>
 <div th:fragment="questionList">
     <table class="table">
@@ -14,7 +14,7 @@
         <tr th:each="question, stat : ${questionList}">
             <td th:text="${questionList.size() - stat.index}"></td>
             <td>
-                <a th:text="${question.getTitle()}"></a>
+                <a th:href="@{/questions/{id}(id=${question.questionId})}" th:text="${question.title}"></a>
             </td>
             <td th:text="${question.getQuestionDate()}"></td>
         </tr>

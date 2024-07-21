@@ -48,4 +48,8 @@ public class QuestionService {
                 .collect(Collectors.toList());
     }
 
+    public Question questionDetail(Long questionId) {   // 문의 사항 상세 조회
+        return questionRepository.findById(questionId)
+                .orElseThrow(() -> new RuntimeException("Question not found"));
+    }
 }
