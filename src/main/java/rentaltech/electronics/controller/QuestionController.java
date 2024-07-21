@@ -49,7 +49,7 @@ public class QuestionController {
     }
 
     @GetMapping("/items/{itemId}/questions")
-    public String questionList(@PathVariable("itemId") Long serialNum, Model model) {
+    public String questionList(@PathVariable("itemId") Long serialNum, Model model) {   // 문의 사항 목록 출력 (사용자)
         List<QuestionListDto> questionDtos = questionService.questionList(serialNum);
         model.addAttribute("questionList", questionDtos);
 
@@ -57,10 +57,18 @@ public class QuestionController {
     }
 
     @GetMapping("/questions/{id}")
-    public String getQuestion(@PathVariable Long id,Model model) {
+    public String getQuestion(@PathVariable Long id, Model model) { // 문의 사항 상세 내용 출력
         Question question = questionService.questionDetail(id);
         model.addAttribute("questionDetail", question);
 
         return "questions/questionDetail";
+    }
+
+    @GetMapping("/questions")
+    public String questionList(Model model) {   // 문의 사항 목록 출력 (관리자)
+        List<QuestionListDto> questionDtos= questionService.questionAll();
+        model.addAttribute("questionList", questionDtos);
+
+        return "questions/questionList";
     }
 }

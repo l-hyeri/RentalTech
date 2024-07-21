@@ -52,4 +52,13 @@ public class QuestionService {
         return questionRepository.findById(questionId)
                 .orElseThrow(() -> new RuntimeException("Question not found"));
     }
+
+    public List<QuestionListDto> questionAll() {    // 문의 사항 목록 (관리자)
+
+        List<Question> questions = questionRepository.findAll();
+
+        return questions.stream()
+                .map(QuestionListDto::questionList)
+                .collect(Collectors.toList());
+    }
 }
