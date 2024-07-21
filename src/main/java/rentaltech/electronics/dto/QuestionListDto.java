@@ -8,6 +8,7 @@ import rentaltech.electronics.entity.Question;
 @Setter
 public class QuestionListDto {
 
+    private Long questionId;
     private Long questionItemId;
     private String questionDate;
     private String title;
@@ -15,6 +16,7 @@ public class QuestionListDto {
 
     public static QuestionListDto questionList(Question question) {
         QuestionListDto dto = new QuestionListDto();
+        dto.setQuestionId(question.getId());
         dto.setQuestionItemId(question.getItem().getSerialNum());
         dto.setQuestionDate(question.getQuestionDate());
         dto.setTitle(question.getTitle());
