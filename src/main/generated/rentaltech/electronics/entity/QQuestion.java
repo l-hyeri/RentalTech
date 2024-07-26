@@ -22,6 +22,8 @@ public class QQuestion extends EntityPathBase<Question> {
 
     public static final QQuestion question = new QQuestion("question");
 
+    public final ListPath<Comment, QComment> commentList = this.<Comment, QComment>createList("commentList", Comment.class, QComment.class, PathInits.DIRECT2);
+
     public final StringPath content = createString("content");
 
     public final NumberPath<Long> id = createNumber("id", Long.class);

@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 @Getter
 @Setter
@@ -30,6 +31,10 @@ public class Question {
     private String content;
 
     private String questionDate; // 글 작성 날짜
+
+    @OneToMany(mappedBy = "question", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+    @OrderBy("id asc")
+    private List<Comment> commentList;  // 댓글 목록
 
     public static Question createQuestion(Member member, Item item, String title, String content) {
         Question question = new Question();
